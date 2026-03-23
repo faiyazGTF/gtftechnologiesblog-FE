@@ -1,0 +1,37 @@
+{
+  "name": "liv-interio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "axios": "^1.9.0",
+    "he": "^1.2.0",
+    "html-react-parser": "^5.2.5",
+    "next": "15.3.2",
+    "nodemailer": "^7.0.3",
+    "react": "^18.2.0",
+    "react-compare-image": "^3.5.4",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.57.0",
+    "react-hot-toast": "^2.5.2",
+    "react-intersection-observer": "^9.16.0",
+    "react-quill": "^2.0.0-beta.4",
+    "swiper": "^11.2.7",
+    "yet-another-react-lightbox": "^3.23.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7"
+  }
+}
