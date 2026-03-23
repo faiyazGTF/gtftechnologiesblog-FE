@@ -1,6 +1,7 @@
-// pages/_app.js
 import '@/styles/fonts.css'; 
 import '@/styles/globals.css';
+import { useRouter } from 'next/router';
+import '@/styles/tailwind-admin.css'; // We'll handle this purely by CSS scope if needed, or import it here
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 import { useEffect } from 'react';

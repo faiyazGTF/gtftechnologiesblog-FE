@@ -25,9 +25,9 @@ const BlogCard = ({ data, detailsPage }) => {
    .slice(0, peraLimit)
    .join(' ') + (description.split(' ').length > peraLimit ? '...' : '');
   return (
-    <div className=" overflow-hidden transition-shadow duration-300 ">
+    <div className="overflow-hidden transition-shadow duration-300">
       {/* Image Section */}
-      <div data-aos="fade-up" className={`relative w-full  ${detailsPage ? 'h-[400px]' : 'h-48'}`}>
+      <div data-aos="fade-up" className={`relative w-full`} style={{ height: detailsPage ? '400px' : '12rem' }}>
                       <CustomImage
                         src={`${BASE_URL}${feature_image}`}
                         mobileSrc={`${BASE_URL}${mb_image}`}
@@ -40,11 +40,11 @@ const BlogCard = ({ data, detailsPage }) => {
       <div className="mt-4">
         {/* Title and Date Row */}
         <div className="flex justify-between items-center mb-3">
-          <h3 data-aos="fade-right" className="bg-[var(--text-primary)] text-white rounded-[5px] py-[7px] px-[15px] text-[12px]">{tags || "Interior Design"}</h3>
-          <span data-aos="fade-left" className="text-[12px] text-back">{date_at}</span>
+          <h3 data-aos="fade-right" className="bg-primary text-white rounded-5 py-7 px-15 text-12">{tags || "Interior Design"}</h3>
+          <span data-aos="fade-left" className="text-12 text-black">{date_at}</span>
         </div>
-         <Heading animation='fade-up' className='!text-left md:!text-[18px] my-[20px]'>{detailsPage ? heading : limitedTitle}</Heading>
-        <Pera className='mb-[20px] !text-justify'>{detailsPage ? short_description : limitedDescription}</Pera>
+         <Heading animation='fade-up' className='text-left md:text-18 my-20'>{detailsPage ? heading : limitedTitle}</Heading>
+        <Pera className='mb-20 text-justify'>{detailsPage ? short_description : limitedDescription}</Pera>
         {/* Description */}
         {detailsPage && <BlogContent html={description}/> }
         
@@ -52,11 +52,11 @@ const BlogCard = ({ data, detailsPage }) => {
         {/* View Details Button */}
         {!detailsPage && (
         <Link 
-        data-aos="fade-right"
+          data-aos="fade-right"
           href={`/blog-details?slug=${slug}`}
-          className="inline-block pb-[10px] text-[var(--text-primary)] transition-colors duration-300 border-b border-[var(--text-primary)]"
+          className="inline-block pb-10 text-[var(--text-primary)] transition-all border-b"
         >
-          View Details <Image src="/assets/icons/next-arrow.webp" alt='next arrow' width={20} height={0} className='h-auto inline-block ml-[5px]'/>
+          View Details <Image src="/assets/icons/next-arrow.webp" alt='next arrow' width={20} height={0} className='h-auto inline-block ml-5'/>
         </Link>
         )}
       </div>

@@ -85,30 +85,30 @@ const Projects = ({ openModal }) => {
       {data.map((item, projectIndex) => (
         <Section
           key={item.title}
-          className="relative overflow-hidden before:absolute before:bottom-0 before:left-[10%] before:w-[80%] before:h-[0.5px] before:bg-[var(--text-primary)]"
+          className="project-separator"
         >
-          <Container className="lg:!w-[85%] 2xl:!w-[80%]">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-[30px] md:gap-[50px]">
-              <div className="md:col-span-4" data-aos="fade-up-right">
-                <Heading className="uppercase mt-[0px] md:mt-[50px]  2xl:!text-[24px]">
+          <Container className="lg-w-85 w-2xl-80">
+            <div className="grid col-12 md-grid-cols-12 gap-30 md-gap-50">
+              <div className="md-col-span-4" data-aos="fade-up-right">
+                <Heading className="uppercase mt-0 md-mt-50 text-2xl-24">
                   {item.title}
                 </Heading>
-                <Pera className="text-[14px] mb-  [10px] md:!mb-[20px] capitalize">
+                <Pera className="text-14 mb-10 md-mb-20 capitalize">
                   {item.location}
                 </Pera>
-                <Pera className="!text-[12px] 2xl:!text-[13px]">
+                <Pera className="text-12 text-2xl-13">
                   {item.desc}
                 </Pera>
                 <Button
                   href="/project"
-                  className="bg-white mt-[30px] md:mt-[50px] 2xl:mt-[70px] w-fit block text-[var(--text-primary)]"
+                  className="bg-white mt-30 md-mt-50 mt-2xl-70 w-fit block text-primary"
                   onOpen={openModal}
                   button={true}
                 >
                   Explore project
                 </Button>
               </div>
-              <div className="md:col-span-8" data-aos="fade-up-left">
+              <div className="md-col-span-8" data-aos="fade-up-left">
                 <div className="w-full h-full">
                   <Swiper
                     modules={[Pagination, Autoplay]}
@@ -121,7 +121,7 @@ const Projects = ({ openModal }) => {
                     {item.images.map((img, idx) => (
                       <SwiperSlide
                         key={idx}
-                        className="pb-[30px] 2xl:pb-[50px]"
+                        className="pb-30 pb-2xl-50"
                         onClick={() => {
                           setLightboxImages(
                             formatSlidesForLightbox(item.images)
@@ -129,7 +129,7 @@ const Projects = ({ openModal }) => {
                           setLightboxIndex(idx);
                         }}
                       >
-                        <div className="relative w-full h-[300px] md:h-[400px] 2xl:h-[450px] rounded-[15px] overflow-hidden cursor-pointer">
+                        <div className="relative w-full h-300 md-h-400 h-2xl-450 rounded-15 overflow-hidden cursor-pointer">
                           <CustomImage
                             src={img.src}
                             mobileSrc={img.mobileSrc}

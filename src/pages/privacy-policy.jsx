@@ -9,20 +9,20 @@ const privacyPolicy = () => {
         {title:"Security: ",desc:"To ensure security while transferring sensitive information, all the ongoing transmissions between client and server are encrypted using advanced and standard protocols. We also practice restricted access by employees and hold them to high levels of confidentiality. Use of cookies We may use cookies for security, session continuity, and customization purposes. In case of a user opting to reject a cookie, he/ she may not be able to gain access to some of the limited services or use some features of the site. In case of any queries or suggestions regarding privacy statement or your dealings with this web site, please contact:"}
     ]
   return (
-    <Section className="!p-[30px]">
+    <Section className="p-30">
       {/* <Container> */}
-      <div className="mx-auto text-[13px] font-normal font-sans p-8 border-y border-[var(--text-primary)]">
-        <Pera className="!text-justify mb-[10px]">
-          <span className="font-bold text-[15px]">Privacy Policy : </span>
+      <div className="mx-auto text-13 font-normal font-sans p-32 border-y">
+        <Pera className="text-justify mb-10">
+          <span className="font-bold text-15">Privacy Policy : </span>
           In our endeavor and commitment of protecting your personal
           information, we have designed this comprehensive privacy policy. This
           is to keep your interests and information safe on our website.
         </Pera>
-        <ul className="list-disc ml-6">
+        <ul className="list-disc ml-24">
             {list.map((data,index)=>(
-          <li key={index} className="mb-[10px]">
-            <Pera className="!text-justify">
-            <span className="font-bold text-[15px] mr-[3px]">
+          <li key={index} className="mb-10">
+            <Pera className="text-justify">
+            <span className="font-bold text-15 mr-3">
               {data.title}
             </span>
             {data.desc}

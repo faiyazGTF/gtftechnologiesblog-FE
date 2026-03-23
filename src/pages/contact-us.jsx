@@ -46,25 +46,25 @@ const detailsData = [
       />
       <Section className="overflow-hidden">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-[50px]">
-            <div className="md:col-span-6">
+          <div className="grid col-12 md-grid-cols-12 gap-50">
+            <div className="md-col-span-6">
               <div>
-                <Heading animation="fade-right" className="uppercase !text-left md:!text-[24px]">
+                <Heading animation="fade-right" className="uppercase text-left md-text-24">
                   Get In Touch
-                  <span className="inline-block ms-[20px] w-full max-w-[150px] h-[1px] bg-[var(--text-primary)]"></span>
+                  <span className="inline-block ms-20 w-full max-w-150 h-1 bg-primary"></span>
                 </Heading>
-                <Heading animation="fade-left" className="uppercase !text-left ms-[70px] md:ms-[150px] mt-[10px] md:mt-[20px]">
+                <Heading animation="fade-left" className="uppercase text-left ms-70 md-ms-150 mt-10 md-mt-20">
                   With Us
                 </Heading>
               </div>
-              <Form animation="fade-up"  className="mt-[50px]" />
+              <Form animation="fade-up"  className="mt-50" />
             </div>
-            <div data-aos="fade-left" className="md:col-span-6">
+            <div data-aos="fade-left" className="md-col-span-6">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1899.4106093918956!2d77.38296063872365!3d28.61793354845184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb4a775f2b25%3A0x51bb40e9351cf806!2sLiv%20Interio!5e1!3m2!1sen!2sin!4v1749038971601!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
-                className="w-full h-full border-0 rounded-[10px]"
+                className="w-full h-full border-0 rounded-10"
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -73,20 +73,20 @@ const detailsData = [
           </div>
         </Container>
       </Section>
-      <Section className="bg-[var(--background-secondary)]">
+      <Section className="bg-secondary">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-[50px]">
+          <div className="grid col-12 md-grid-cols-12 gap-50">
             {detailsData.map((section, index) => (
-              <div data-aos="fade-up" className="md:col-span-4 text-center" key={index}>
-                <Heading  className="uppercase pb-[20px] 2xl:!text-[18px]  px-[20px] mb-[25px] !text-center w-fit mx-auto border-b border-[var(--text-primary)]">
+              <div data-aos="fade-up" className="md-col-span-4 text-center" key={index}>
+                <Heading  className="uppercase pb-20 text-18 px-20 mb-25 text-center w-fit mx-auto border-b">
                   {section.title}
                 </Heading>
                 {section.items.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    {idx > 0 && <span className="mx-[5px]">,</span>}
+                    {idx > 0 && <span className="mx-5">,</span>}
                     <a
                       href={item.link}
-                      className="text-black hover:text-[var(--text-primary)] text-[14px] 2xl:text-[18px] 2xl:leading-[50px] tracking-[2px] lowercase "
+                      className="text-black hover:text-primary text-14 text-2xl-18 leading-2xl-50 tracking-2 lowercase"
                       target={item.target ? "_blank" : ""}
                     >
                       {item.label}

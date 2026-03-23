@@ -5,7 +5,7 @@ const Section = React.forwardRef(({ children, className = '', id = '', ...rest }
     <section
       id={id}
       ref={ref}
-      className={`py-[40px] md:py-[60px] lg:py-[70px] 2xl:py-[100px] ${className}`}
+      className={`section-spacing ${className}`}
       {...rest}
     >
       {children}

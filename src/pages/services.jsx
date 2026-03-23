@@ -242,23 +242,23 @@ const handleCategorySelect = (category) => {
         key={selectedCategory}
         id="categorySection"
         ref={categorySectionRef}
-        className="overflow-hidden relative before:absolute before:bottom-0 before:left-[7.5%] before:w-[85%] before:h-[0.5px] before:bg-[var(--text-primary)]"
+        className="section-separator"
       >
         <Container>
           <Heading
             animation="fade-up"
-            className="uppercase !text-center md:mb-[40px]"
+            className="uppercase text-center md-mb-40"
           >
             {serviceData.title}
           </Heading>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-[50px] ">
-            <div className="md:col-span-6">
+          <div className="grid col-12 md-grid-cols-12 gap-50 ">
+            <div className="md-col-span-6">
               {serviceData.info.map((data, index) => (
                 <div key={index}>
                   {data.title && (
                     <Heading
                       animation="fade-right"
-                      className="md:!text-[24px] mb-[10px] lg:my-[20px] 2xl:my-[30px]"
+                      className="md-text-24 mb-10 lg-my-20 text-2xl-my-30"
                     >
                       {data.title}
                     </Heading>
@@ -266,7 +266,7 @@ const handleCategorySelect = (category) => {
                   {data.desc && (
                     <Pera
                       animation="fade-right"
-                      className="!text-justify mb-[10px]"
+                      className="text-justify mb-10"
                     >
                       {data.desc}
                     </Pera>
@@ -274,30 +274,30 @@ const handleCategorySelect = (category) => {
                 </div>
               ))}
             </div>
-            <div className="md:col-span-6">
+            <div className="md-col-span-6">
               <div
                 data-aos="fade-right"
-                className="h-[300px] 2xl:h-[400px] w-full relative "
+                className="h-300 h-2xl-400 w-full relative "
               >
                 <CustomImage
                   src={serviceData.image}
                   mobileSrc={serviceData.mobileSrc}
                   alt={serviceData.altTag}
-                  className="object-cover rounded-[10px] w-full h-full"
+                  className="object-cover rounded-10 w-full h-full"
                 />
               </div>
             </div>
           </div>
-          <div className="mt-[50px]">
+          <div className="mt-50">
             {serviceData.list.map((data, index) => (
-              <div key={index} className="mt-[20px]">
+              <div key={index} className="mt-20">
                 <Heading
                   animation="fade-up"
                   className={`mb-2  ${
                     data.heading
-                      ? "md:!text-[22px] border-b border-[var(--text-primary)] pb-[20px] mb-[20px] inline-block"
-                      : "md:!text-[18px] "
-                  } ${data.inline && "!inline-block"}`}
+                      ? "md-text-22 border-b pb-20 mb-20 inline-block"
+                      : "md-text-18 "
+                  } ${data.inline && "inline-block"}`}
                 >
                   {data.title}
                 </Heading>
@@ -306,8 +306,8 @@ const handleCategorySelect = (category) => {
                   <Pera
                     animation="fade-up"
                     key={i}
-                    className={`!text-[12px] !text-justify  ${
-                      data.inline && "!inline-block"
+                    className={`text-12 text-justify  ${
+                      data.inline && "inline-block"
                     }`}
                   >
                     {para}

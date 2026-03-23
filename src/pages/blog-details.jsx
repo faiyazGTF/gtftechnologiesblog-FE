@@ -53,11 +53,11 @@ const BlogDetails = () => {
       />
       <Section
         id="details"
-        className="relative overflow-hidden before:absolute before:bottom-0 before:left-[7.5%] before:w-[85%] before:h-[0.5px] before:bg-[var(--text-primary)]"
+        className="section-separator"
       >
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-[50px]">
-            <div className="md:col-span-9">
+          <div className="grid col-12 md-grid-cols-12 gap-50">
+            <div className="md-col-span-9">
               {loading ? (
                 <p>Loading...</p>
               ) : blog ? (
@@ -66,7 +66,7 @@ const BlogDetails = () => {
                 <p>Blog not found.</p>
               )}
             </div>
-            <div className="md:col-span-3">
+            <div className="md-col-span-3">
               <LatestBlog />
             </div>
           </div>

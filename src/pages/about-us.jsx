@@ -48,28 +48,28 @@ const about = ({ openModal }) => {
         <title>Liv Interio - Interior Design Excellence</title>
       </Head>
       <Hero imageSrc="/assets/images/about-us/desktop/banner.webp" mobileSrc="/assets/images/about-us/mobile/banner.webp" title="About Us" />
-      <Section className="!pb-0 overflow-hidden">
+      <Section className="pb-0 overflow-hidden">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-[50px]">
+          <div className="grid col-12 md-grid-cols-12 gap-50">
             <div className="md:col-span-6">
               <div>
                 <Heading
                   animation="fade-right"
-                  className="uppercase !text-left md:!text-[24px]"
+                  className="uppercase text-left md-text-24"
                 >
                   About
-                  <span className="inline-block  w-full max-w-[150px] h-[1px] bg-[var(--text-primary)]"></span>
+                  <span className="inline-block w-full max-w-150 h-1 bg-primary"></span>
                 </Heading>
                 <Heading
                   animation="fade-left"
-                  className="uppercase !text-left ms-[70px] md:ms-[100px] mt-[10px] md:mt-[20px]"
+                  className="uppercase text-left ms-70 md-ms-100 mt-10 md-mt-20"
                 >
                   Liv Interio
                 </Heading>
               </div>
             </div>
             <div className="md:col-span-6">
-              <Pera animation="fade-up" className="!text-justify md:!text-left">
+              <Pera animation="fade-up" className="text-justify md-text-left">
                 Founded in 2018, Liv Interio is a boutique interior design
                 studio that brings thoughtful design, refined aesthetics, and
                 exceptional functionality to residential and commercial spaces.
@@ -77,25 +77,25 @@ const about = ({ openModal }) => {
                 work is guided by a passion to create environments that speak to
                 the soul and serve everyday living with grace and elegance.
               </Pera>
-              <div className="flex items-center justify-start gap-[50px] md:gap-[100px] pb-[15px] md:pb-[30px] mt-[30px] md:mt-[40px] border-b border-[var(--text-primary)]">
+              <div className="flex items-center justify-start gap-50 md-gap-100 pb-15 md-pb-30 mt-30 md-mt-40 border-b">
                 {[
                   { title: 8, em: "Years", subtitle: " Experience" },
                   { title: 50, em: "+", subtitle: "Projects" },
                 ].map((item, index) => (
                   <h4
                     key={index}
-                    className="text-[var(--text-primary)] text-[22px] lg:text-[26px] 2xl:text-[32px] "
+                    className="text-primary text-22 lg-text-26 text-2xl-32"
                   >
                     <span
                       data-aos="fade-up"
-                      className="block font-[700] font-montserrat"
+                      className="block font-700 font-montserrat"
                     >
                       {" "}
                       <Counter target={parseInt(item.title)} /> {item.em}
                     </span>
                     <span
                       data-aos="fade-up"
-                      className="block font-[700] font-montserrat"
+                      className="block font-700 font-montserrat"
                     >
                       {item.subtitle}
                     </span>
@@ -118,9 +118,10 @@ const about = ({ openModal }) => {
       {isModalOpen && (
         <CustomModal
           onClose={closeContentModal}
-          className="!max-w-[80%] !bg-[var(--background-primary)] !p-[40px]"
+          className="!max-w-[80%]"
+          style={{ maxWidth: '80%', backgroundColor: 'var(--background-primary)', padding: '40px' }}
         >
-          <div className="max-h-[80vh] overflow-auto ">
+          <div className="overflow-auto" style={{ maxHeight: '80vh' }}>
             {descModal.map((item, index) => (
               <Pera key={index} className="text-justify mb-[10px]">
                 <span className="font-bold">{item.span}</span> {item.desc}
