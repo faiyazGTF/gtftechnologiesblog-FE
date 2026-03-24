@@ -42,19 +42,68 @@ const Header = ({ onOpen }) => {
   }, [lastScrollY]);
 
   useEffect(() => {
-    if (isMenuOpen) {
+    // Force cleanup on mount
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
       // Disable scroll
-      document.body.style.overflow = 'hidden';
+      // document.body.style.overflow = 'hidden';
     } else {
       // Enable scroll
       document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
     }
 
     // Clean up on component unmount
     return () => {
       document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
     };
-  }, [isMenuOpen]);
+  }, [isOpen]);
+
+  /* useEffect(() => {
+    const initSidebar = async () => {
+      if (typeof window === "undefined") return;
+
+      const $ = (await import("jquery")).default;
+      window.jQuery = $;
+      window.$ = $;
+
+      const loadBootstrap = () => {
+        return new Promise((resolve) => {
+          if ($.fn.collapse || document.querySelector('script[src="/assets/frontend/js/bootstrap.bundle.min.js"]')) {
+            resolve();
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = '/assets/frontend/js/bootstrap.bundle.min.js';
+          script.async = true;
+          script.onload = resolve;
+          document.body.appendChild(script);
+        });
+      };
+
+      await loadBootstrap();
+
+      if (typeof $.fn.collapse === 'function') {
+        $('.sidebar a[data-toggle="collapse"]').off('click').on('click', function (e) {
+          const target = $(this).attr('href');
+          if (target && target.startsWith('#')) {
+            e.preventDefault();
+            $('.sidebar .collapse').not(target).collapse('hide');
+          }
+
+          $('.sidebar a').removeClass('active');
+          $(this).addClass('active');
+        });
+      }
+    };
+
+    initSidebar();
+  }, []); */
 
   return (
     <>
@@ -207,10 +256,10 @@ const Header = ({ onOpen }) => {
 
               <ul className="other_links">
                 <li>
-                  <a href="/home/privacy_policy">Privacy Policy</a>
+                  <a href="https://gtftechnologies.com/home/privacy_policy">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="/sitemap.xml">Sitemap</a>
+                  <a href="https://gtftechnologies.com/sitemap.xml">Sitemap</a>
                 </li>
               </ul>
             </div>
@@ -230,9 +279,7 @@ const Header = ({ onOpen }) => {
           <div className="logo">
             <img src="/assets/images/gtf-logo.svg" width="100%" />
           </div>
-          <div className="mail">
-            <span>Make An Enquiry</span>
-          </div>
+
         </div>
       </div>
       <a href="javascript:void(0)" id="nav-toggle"

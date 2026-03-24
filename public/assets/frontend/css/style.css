@@ -2174,3 +2174,7 @@ ul {
     align-items: center;
     color: #333;
 }
+
+.submenu.collapse {
+    visibility: visible;
+}

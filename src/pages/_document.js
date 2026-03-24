@@ -19,12 +19,12 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Liv Interio" />
         <meta property="og:description" content="Liv Interio" />
-        
+
         {/* Owl Carousel CSS */}
         <link rel="stylesheet" href="/assets/frontend/css/owl.carousel.min.css" />
         <link rel="stylesheet" href="/assets/frontend/css/owl.theme.default.min.css" />
       </Head>
-      <body className="antialiased">
+      <body className="">
         <Main />
         <NextScript />
       </body>

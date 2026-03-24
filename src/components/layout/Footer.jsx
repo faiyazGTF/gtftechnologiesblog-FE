@@ -83,7 +83,7 @@ const contactLink = [
 
 const Footer = () => {
   return (
-    <Section as="footer">
+    <section as="footer">
 
       <div className="fixed_footer homepage">
         <footer className="footer pt_80 pt_sm_40 custom_section">
@@ -229,7 +229,7 @@ const Footer = () => {
 
       </div>
 
-    </Section>
+    </section>
   );
 };
 
