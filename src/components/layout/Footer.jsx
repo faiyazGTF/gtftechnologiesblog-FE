@@ -7,7 +7,6 @@ import Pera from "../utilities/Pera";
 import Heading from "../utilities/Heading";
 
 
-
 const contactLink = [
   {
     link: "https://maps.app.goo.gl/MeK96x28vzsG7FHL9",
@@ -103,7 +102,7 @@ const Footer = () => {
                         <p>{item.address}</p>
                         <a href={`tel:${item.tel}`}>
                           <span className="icon">
-                            <img src="assets/frontend/images/mobile.svg" alt="call-icon" />
+                            <img src="/assets/frontend/images/mobile.svg" alt="call-icon" />
                           </span>
                           ${item.mobile}
                         </a>
@@ -128,16 +127,16 @@ const Footer = () => {
 
             <div className="footer_bottom fadeUp delay_03">
               <div className="logo d-flex justify-content-center align-items-center">
-                <span><img src="assets/images/gtflogo-vector.svg" alt="gtf technologies logo" className="img-fluid" /></span>
-                <span><img src="assets/frontend/images/google-partner.png" alt="gtf technologies logo" className="img-fluid" /></span>
-                <span><img src="assets/frontend/images/global-partner.png" alt="gtf technologies logo" className="img-fluid" /></span>
+                <span><img src="/assets/images/gtflogo-vector.svg" alt="gtf technologies logo" className="img-fluid" /></span>
+                <span><img src="/assets/frontend/images/google-partner.png" alt="gtf technologies logo" className="img-fluid" /></span>
+                <span><img src="/assets/frontend/images/global-partner.png" alt="gtf technologies logo" className="img-fluid" /></span>
               </div>
 
               <div className="right_content">
                 <ul>
                   <li>
                     <a href="tel:+91-9958871603">
-                      <img src="assets/frontend/images/smartphone.png" alt="gtf technologies icon" className="img-fluid" />
+                      <img src="/assets/frontend/images/smartphone.png" alt="gtf technologies icon" className="img-fluid" />
                       +91-9958-87-1603
                     </a>
                   </li>
@@ -145,7 +144,7 @@ const Footer = () => {
 
                   <li>
                     <a href="mailto:hello@gtftechnologies.com">
-                      <img src="assets/frontend/images/envelope-dark.png" alt="gtf technologies icon" className="img-fluid" />
+                      <img src="/assets/frontend/images/envelope-dark.png" alt="gtf technologies icon" className="img-fluid" />
                       hello@gtftechnologies.com
                     </a>
                   </li>
@@ -177,8 +176,8 @@ const Footer = () => {
         <div className="btns btn_scrolled" top_pos="0">
           <button className="btn fb_btn" btn_at="fb_data" type="button">
             <span className="icon">
-              <img src="assets/frontend/images/fb.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
-              <img src="assets/frontend/images/arrow.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
+              <img src="/assets/frontend/images/fb.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
+              <img src="/assets/frontend/images/right-ar.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
             </span>
             <span className="text">
               Facebook
@@ -187,8 +186,8 @@ const Footer = () => {
 
           <button className="btn pint_btn" btn_at="pt_data" type="button">
             <span className="icon">
-              <img src="assets/frontend/images/pinterest.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
-              <img src="assets/frontend/images/arrow.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
+              <img src="/assets/frontend/images/pinterest.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
+              <img src="/assets/frontend/images/right-ar.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
             </span>
             <span className="text">
               Pinterest
@@ -197,8 +196,8 @@ const Footer = () => {
 
           <a className="btn linkedin_btn" btn_at="linkedin_data" href="https://in.linkedin.com/company/gtftechnologies" target="_blank">
             <span className="icon">
-              <img src="assets/frontend/images/linkedin.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
-              <img src="assets/frontend/images/arrow.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
+              <img src="/assets/frontend/images/linkedin.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
+              <img src="/assets/frontend/images/right-ar.png" alt="gtf technologies social icon" className="img-fluid back_icon" />
             </span>
             <span className="text">
               Linkedin
@@ -207,7 +206,7 @@ const Footer = () => {
 
           <a className="btn instagram_btn" btn_at="instagram_data" href="https://www.instagram.com/gtf_technologies/" target="_blank">
             <span className="icon">
-              <img src="assets/frontend/images/instagram1.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
+              <img src="/assets/frontend/images/instagram1.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
 
             </span>
             <span className="text">
@@ -217,7 +216,7 @@ const Footer = () => {
 
           <a className="btn youtube_btn" btn_at="youtube_data" href="https://www.youtube.com/@GTFTECHNOLOGIES" target="_blank">
             <span className="icon">
-              <img src="assets/frontend/images/youtube.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
+              <img src="/assets/frontend/images/youtube.png" alt="gtf technologies social icon" className="img-fluid social_icon" />
             </span>
             <span className="text">
               Youtube

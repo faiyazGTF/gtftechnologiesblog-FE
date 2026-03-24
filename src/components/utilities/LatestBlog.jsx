@@ -33,7 +33,7 @@ const LatestBlog = () => {
             className="pb-[10px] mb-[20px] border-b border-[var(--text-primary)]"
           >
             <Link
-              href={`/blog-details?slug=${data.slug}`}
+              href={`/blog/${data.slug}`}
               className="text-[var(--text-primary)] !text-[13px]"
             >
               {data.heading}

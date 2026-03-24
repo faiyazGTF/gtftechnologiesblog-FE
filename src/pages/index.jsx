@@ -8,6 +8,9 @@ import Section from "@/components/utilities/Section";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import NavLink from "@/components/utilities/NavLink";
+import Link from "next/link";
+import Card from "@/components/utilities/Card";
 
 const Blogs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,33 +18,23 @@ const Blogs = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [categories, setCategories] = useState([]);
+  const [filtercategories, setFiltercategories] = useState([]);
+
   const [checkCategories, setCheckCategories] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const limit = 4;
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  const fetchBlogs = async () => {
-    try {
-      setLoading(true);
-      const endpoint = searchTerm
-        ? `${BASE_URL}website/blog?search=${searchTerm}&categories=${checkCategories.join(",")}`
-        : `${BASE_URL}website/blog?page=${page}&limit=${limit}&categories=${checkCategories.join(",")}`;
-      const res = await axios.get(endpoint);
 
-      setBlogs(res.data?.data || []);
-      setTotalPages(res.data?.pagination?.totalPages || 1);
-    } catch (err) {
-      console.error("Failed to fetch blogs:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const endpoint = `${BASE_URL}website/blog-category?page=${page}&limit=${limit}`;
+      const endpoint = `${BASE_URL}website/blog-category?page=${page}&limit=${limit}&ids=${checkCategories.join(",")}`;
       const res = await axios.get(endpoint);
+      if (filtercategories.length <= 0) {
+        setFiltercategories(res.data?.data || []);
+      }
       setCategories(res.data?.data || []);
     } catch (err) {
       console.error("Failed to fetch blogs:", err);
@@ -63,6 +56,7 @@ const Blogs = () => {
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
+      fetchCategories();
       fetchBlogs();
     }, 300); // debounce input
 
@@ -73,6 +67,31 @@ const Blogs = () => {
     if (newPage !== page) setPage(newPage);
   };
 
+  const changeDateFormate = (dateString) => {
+    const date = new Date(dateString);
+    const formatted = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric"
+    });
+    return formatted;
+  }
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true);
+      const endpoint = searchTerm
+        ? `${BASE_URL}website/blog?search=${searchTerm}}`
+        : `${BASE_URL}website/blog?page=${page}&limit=${limit}`;
+      const res = await axios.get(endpoint);
+
+      setBlogs(res.data?.data || []);
+      setTotalPages(res.data?.pagination?.totalPages || 1);
+    } catch (err) {
+      console.error("Failed to fetch blogs:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Head>
@@ -100,71 +119,48 @@ const Blogs = () => {
         <div className="container">
 
           <div className="row">
-            <div className="col-sm-9">
+            <div className="col-sm-9 listing_itemcard_container">
 
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="big-box">
-                    <h4 className="main-heading">Featured Blog</h4>
+              {categories && categories.map((cat) => {
+                if (cat.blogs.length > 0) {
+                  return (<>
 
-                    <div className="inner-big-box">
-                      <div className="box">
-                        <div className="left">
-                          <img src="images/Mask group.png" width="100%" />
-                        </div>
-                        <div className="right">
-                          <div className="content">
-                            <span className="catogories">SEO</span>
-                            <h5>Real Estate Digital Marketing Agencies in India: Why GTF Technologies is the Choice for Developers? Real Estate Digital Marketing Agencies in India: Why GTF Technologies is the Choice for Developers?</h5>
-                            <p><img src="images/check-mark.png" /> july 04, 2022</p>
-                            <button className="btn btn-default">View All <img src="images/right-down.png" /> </button>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="big-box-multiple">
-                    <h4 className="main-heading">Digital Marketing</h4>
-                    <button className="btn btn-default btn-multi">View All <img src="images/right-down.png" /> </button>
-                  </div>
-
-                  <div className="box-multiple">
                     <div className="row">
-                      <div className="col-sm-4">
-                        <div className="inner-smb">
-                          <img src="images/blog-small.png" width="100%" />
-                          <div className="content">
-                            <span className="catogories">Digital Marketing</span>
-                            <p className="main-text">Real Estate Digital Marketing Agencies in India: Why GTF Technologies is...</p>
-                            <p className="btn-action"><span className="calander"><img src="images/check-mark.png" width="16px;" /> july 04, 2022</span> <span><img src="images/right-ar.png" width="16px;" /> </span> </p>
+                      <div className="col-sm-12">
+                        <div className="big-box-multiple">
+                          <h4 className="main-heading">{cat.name}</h4>
+                          {
+                            cat.blogs.length > 3 && (
+                              <Link href={`/category/${cat.slug}`}><button className="btn btn-default btn-multi">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                            )
+                          }
+                        </div>
+
+                        <div className="box-multiple">
+                          <div className="row">
+                            {cat.blogs && cat.blogs.map((blogitem) => {
+                              return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
+                            })}
                           </div>
                         </div>
                       </div>
-
                     </div>
-                  </div>
+                  </>)
+                }
+              })}
 
-
-                </div>
-              </div>
 
             </div>
 
             <div className="col-sm-3">
               <div className="small-box">
-                <div className="search-box-container mb-4">
+                {/* <div className="search-box-container mb-4">
                   <SearchInput
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search blogs..."
                   />
-                </div>
+                </div> */}
 
                 <div id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -184,18 +180,18 @@ const Blogs = () => {
                     <div id="accordionBodyOne" className="collapse show visible" role="tabpanel" aria-labelledby="accordionHeadingOne" aria-expanded="false" data-parent="accordion">
                       <div className="card-block col-12">
                         <form >
-                          {categories.map((item, index) => {
+                          {filtercategories.map((item, index) => {
                             return (
                               <React.Fragment key={index}>
                                 <input
                                   type="checkbox"
-                                  id={`cat-${index}`}
+                                  id={`cat-${index} `}
                                   name="categories"
                                   value={item.id}
                                   checked={checkCategories.includes(item.id)}
                                   onChange={() => handleCategoryToggle(item.id)}
                                 />
-                                <label htmlFor={`cat-${index}`}> {item.name}</label><br />
+                                <label htmlFor={`cat - ${index} `}> {item.name}</label><br />
                               </React.Fragment>
                             )
                           })}
@@ -208,42 +204,46 @@ const Blogs = () => {
                 </div>
 
                 <div className="gap"></div>
+                {blogs && blogs.length > 0 && (
+                  <>
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
 
-                <div id="accordion" role="tablist" aria-multiselectable="true">
+                      <div className="card">
+                        <div className="card-header" role="tab" id="accordionHeadingTwo">
+                          <div className="mb-0 row">
+                            <div className="col-12 no-padding accordion-head">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyTwo" aria-expanded="false" aria-controls="accordionBodyTwo"
+                                className="collapsed">
+                                <i className="fa fa-angle-down" aria-hidden="true"></i>
+                                <h5>Popular Posts</h5>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
 
-                  <div className="card">
-                    <div className="card-header" role="tab" id="accordionHeadingTwo">
-                      <div className="mb-0 row">
-                        <div className="col-12 no-padding accordion-head">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyTwo" aria-expanded="false" aria-controls="accordionBodyTwo"
-                            className="collapsed">
-                            <i className="fa fa-angle-down" aria-hidden="true"></i>
-                            <h5>Popular Posts</h5>
-                          </a>
+                        <div id="accordionBodyTwo" className="collapse show visible" role="tabpanel" aria-labelledby="accordionHeadingTwo" aria-expanded="false" data-parent="accordion">
+                          <div className="card-block col-12">
+                            <ul>
+                              {
+                                blogs && blogs.map((blogitem) => {
+                                  return (<>
+                                    <li><NavLink href={`/blog/${blogitem.slug}`}>{blogitem.heading}</NavLink></li>
+                                  </>)
+                                })
+                              }
+                            </ul>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div id="accordionBodyTwo" className="collapse show visible" role="tabpanel" aria-labelledby="accordionHeadingTwo" aria-expanded="false" data-parent="accordion">
-                      <div className="card-block col-12">
-                        <ul>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                        </ul>
-                      </div>
                     </div>
-                  </div>
+                  </>
+                )}
 
-                </div>
 
                 <div className="gap"></div>
 
-                <div className="form-box">
+                {/* <div className="form-box">
                   <h4>Get in Touch</h4>
 
                   <form action="/action_page.php">
@@ -264,7 +264,7 @@ const Blogs = () => {
                     <button type="submit" className="btn btn-primary">Submit</button>
                   </form>
 
-                </div>
+                </div> */}
 
 
               </div>

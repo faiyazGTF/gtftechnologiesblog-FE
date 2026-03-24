@@ -4,10 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Basic Meta Tags */}
-        
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
 
         {/* Favicon */}
@@ -22,6 +19,10 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Liv Interio" />
         <meta property="og:description" content="Liv Interio" />
+        
+        {/* Owl Carousel CSS */}
+        <link rel="stylesheet" href="/assets/frontend/css/owl.carousel.min.css" />
+        <link rel="stylesheet" href="/assets/frontend/css/owl.theme.default.min.css" />
       </Head>
       <body className="antialiased">
         <Main />

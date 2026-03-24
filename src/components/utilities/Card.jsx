@@ -3,27 +3,35 @@ import React from "react";
 import Heading from "./Heading";
 import Link from "next/link";
 
-const Card = ({data,height,center,border=false}) => {
+const Card = ({ data }) => {
+
+  const changeDateFormate = (dateString) => {
+    const date = new Date(dateString);
+    const formatted = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric"
+    });
+    return formatted;
+  }
   return (
-      <div className={`max-w-[400px] 2xl:max-w-[500px] mx-auto ${border ? 'border-b border-[var(--text-primary)]' : ''} b pb-[30px]`}>
-        <div className={`relative w-full ${height}`}>
-          <Image
-            src={data?.src}
-            alt={data?.alt}
-            fill
-            className="object-cover rounded-[15px]"
-            loading="lazy"
-          />
-        </div>
-        <Heading className={`uppercase mt-[20px] mb-[10px] !text-[20px] ${center}`}>
-          <Link href="/projects">
-          {data?.title}
+
+    <div className="inner-smb">
+      <img src={data.feature_image} width="100%" alt={data.heading} />
+      <div className="content">
+        <span className="catogories">{data.heading}</span>
+        <p className="main-text">{data.short_description}</p>
+        <p className="btn-action">
+          <span className="calander d-flex align-items-center">
+            <img src="/assets/frontend/images/check-mark.png" width="16px" alt="check" /> {changeDateFormate(data.date_at)}
+          </span>
+          <Link href={`/blog/${data.slug}`}>
+            <span><img src="/assets/frontend/images/right-ar.png" width="16px" alt="arrow" /> </span>
           </Link>
-        </Heading>
-        <p className={`uppercase text-[12px] md:text-[14px] text-center md:text-left tracking-[1px] ${center}`}>
-          {data?.desc}
         </p>
       </div>
+    </div>
+
   );
 };
 

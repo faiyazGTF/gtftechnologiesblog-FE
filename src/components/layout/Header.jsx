@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 
 
-
-
 const Header = ({ onOpen }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+
 
   useEffect(() => {
+
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -49,9 +58,9 @@ const Header = ({ onOpen }) => {
 
   return (
     <>
-      <div id="mySidenav" className="sidenav">
+      <div id="mySidenav" className={`sidenav ${isOpen ? "active" : ""}`} style={{ width: isOpen ? "500px" : "0" }}>
         <div className="inner-nav">
-          <img className="brand-logo" src="images/gtflogo-vector.svg" />
+          <img className="brand-logo" src="/assets/images/gtflogo-vector.svg" />
 
           <div className="inner-menu">
 
@@ -214,18 +223,21 @@ const Header = ({ onOpen }) => {
 
           </div>
         </div>
+      </div>
 
-        <div id="mySidenavoff" className="sidenavoff">
-          <div className="inner-off">
-            <div className="logo">
-              <img src="assets/images/gtf-logo.svg" width="100%" />
-            </div>
-            <div className="mail">
-              <span>Make An Enquiry</span>
-            </div>
+      <div id="mySidenavoff" className="sidenavoff" style={{ width: isOpen ? "0" : "92px" }}>
+        <div className="inner-off">
+          <div className="logo">
+            <img src="/assets/images/gtf-logo.svg" width="100%" />
+          </div>
+          <div className="mail">
+            <span>Make An Enquiry</span>
           </div>
         </div>
       </div>
+      <a href="javascript:void(0)" id="nav-toggle"
+        onClick={toggleNav}
+        className={isOpen ? "active" : ""} ><span></span></a>
     </>
   );
 };

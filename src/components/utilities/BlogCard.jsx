@@ -53,7 +53,7 @@ const BlogCard = ({ data, detailsPage }) => {
         {!detailsPage && (
         <Link 
           data-aos="fade-right"
-          href={`/blog-details?slug=${slug}`}
+          href={`/blog/${slug}`}
           className="inline-block pb-10 text-[var(--text-primary)] transition-all border-b"
         >
           View Details <Image src="/assets/icons/next-arrow.webp" alt='next arrow' width={20} height={0} className='h-auto inline-block ml-5'/>
