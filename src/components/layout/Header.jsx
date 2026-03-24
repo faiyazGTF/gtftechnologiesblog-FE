@@ -64,7 +64,7 @@ const Header = ({ onOpen }) => {
     };
   }, [isOpen]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const initSidebar = async () => {
       if (typeof window === "undefined") return;
 
@@ -72,38 +72,27 @@ const Header = ({ onOpen }) => {
       window.jQuery = $;
       window.$ = $;
 
-      const loadBootstrap = () => {
-        return new Promise((resolve) => {
-          if ($.fn.collapse || document.querySelector('script[src="/assets/frontend/js/bootstrap.bundle.min.js"]')) {
-            resolve();
-            return;
-          }
-          const script = document.createElement('script');
-          script.src = '/assets/frontend/js/bootstrap.bundle.min.js';
-          script.async = true;
-          script.onload = resolve;
-          document.body.appendChild(script);
-        });
-      };
+      $('.sidebar a[data-toggle="collapse"]').off('click').on('click', function (e) {
+        e.preventDefault();
+        const targetSelector = $(this).attr('href');
+        const $target = $(targetSelector);
 
-      await loadBootstrap();
+        // Accordion behavior: Close other open menus
+        $('.sidebar .collapse').not($target).slideUp().removeClass('show');
+        $('.sidebar a[data-toggle="collapse"] .arrow').not($(this).find('.arrow')).removeClass('rotate');
 
-      if (typeof $.fn.collapse === 'function') {
-        $('.sidebar a[data-toggle="collapse"]').off('click').on('click', function (e) {
-          const target = $(this).attr('href');
-          if (target && target.startsWith('#')) {
-            e.preventDefault();
-            $('.sidebar .collapse').not(target).collapse('hide');
-          }
+        // Toggle current menu
+        $target.slideToggle().toggleClass('show');
+        $(this).find('.arrow').toggleClass('rotate');
 
-          $('.sidebar a').removeClass('active');
-          $(this).addClass('active');
-        });
-      }
+        // Active class handling
+        $('.sidebar a').removeClass('active');
+        $(this).addClass('active');
+      });
     };
 
     initSidebar();
-  }, []); */
+  }, []);
 
   return (
     <>
