@@ -1,0 +1,15 @@
+services:
+  gtf-blog-frontend:
+    build:
+      context: .
+      args:
+        - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+        - NEXT_PUBLIC_API_ADMIN_URL=${NEXT_PUBLIC_API_ADMIN_URL}
+        - NEXT_PUBLIC_ADMIN_URL=${NEXT_PUBLIC_ADMIN_URL}
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    container_name: gtf-blog-frontend
+    ports:
+      - "3007:3007"
+    restart: always
+    env_file:
+      - .env

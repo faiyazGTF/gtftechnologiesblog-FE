@@ -1,5 +1,7 @@
 import '@/styles/fonts.css'; 
 import '@/styles/globals.css';
+import '../../public/assets/frontend/css/bootstrap.min.css';
+import '../../public/assets/frontend/css/style.css';
 import { useRouter } from 'next/router';
 import '@/styles/tailwind-admin.css'; // We'll handle this purely by CSS scope if needed, or import it here
 import 'aos/dist/aos.css';

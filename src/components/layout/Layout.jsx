@@ -5,9 +5,7 @@ import Footer from '@/components/layout/Footer';
 import CustomModal from '../utilities/CustomModal';
 import Form from '../utilities/Form';
 // my css 
-import '../../../public/assets/frontend/css/bootstrap.min.css';
-
-import '../../../public/assets/frontend/css/style.css';
+// bootstrap and style.css moved to _app.js
 export default function Layout({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
