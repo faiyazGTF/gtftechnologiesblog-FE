@@ -747,13 +747,25 @@ h4.main-heading {
 
 .box-multiple .inner-smb .btn-action .calander img {
     margin-right: 4px;
+    width: 16px;
 }
+
+.box-multiple .inner-smb .btn-action a span img {
+    width: 16px;
+}
+
 
 .box-multiple .inner-smb .main-text {
     padding: 15px 0px;
     line-height: 26px;
 }
 
+.inner-smb .main-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
 
 .owl-carousel .owl-nav.disabled {
     display: block !important;

@@ -14,6 +14,8 @@ const BlogDetails = () => {
   const [filtercategories, setFiltercategories] = useState([]);
   const [popularBlogs, setPopularBlogs] = useState([]);
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const [tocDescription, setTocDescription] = useState('');
+
 
   const router = useRouter();
   const { slug } = router.query;
@@ -27,6 +29,8 @@ const BlogDetails = () => {
       );
       setBlog(res?.data?.data || null);
       fetchCategoryBlogs(res?.data?.data?.category?.id);
+
+
     } catch (err) {
       console.error("Failed to fetch blog:", err);
     } finally {
@@ -194,6 +198,33 @@ const BlogDetails = () => {
 
                       <div dangerouslySetInnerHTML={{ __html: blog?.description }} />
 
+                      {
+                        blog?.toc && blog?.toc.length > 0 && (
+                          <>
+                            <div class="inner-d-box">
+                              <h5>Table of Contents</h5>
+                              <ul className="toc-list">
+                                {blog?.toc?.map((item, index) => (
+                                  <li key={index}>{item.toc_heading}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            {blog?.toc?.map((item, index) => (
+                              <>
+                                <h4 class="main-heading">{item.title}</h4>
+                                <p class="para-details" dangerouslySetInnerHTML={{ __html: blog?.description }} />
+
+
+
+                              </>
+                            ))}
+                          </>
+                        )
+                      }
+
+
+
+
                     </div>
 
                     <br /><br />
@@ -204,7 +235,7 @@ const BlogDetails = () => {
                     </div>
 
                     {categoryBlogs && categoryBlogs.length > 0 && (
-                      <div className="inner-sec-owl">
+                      <div className="inner-sec-owl box-multiple">
                         <div className="owl-carousel1 owl-carousel owl-theme box-multiple">
                           {categoryBlogs.map((item, index) => (
                             <div className="item" key={index}>
