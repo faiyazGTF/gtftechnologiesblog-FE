@@ -104,7 +104,7 @@ const Footer = () => {
                           <span className="icon">
                             <img src="/assets/frontend/images/mobile.svg" alt="call-icon" />
                           </span>
-                          ${item.mobile}
+                          {item.mobile}
                         </a>
                       </div>
                     </li>

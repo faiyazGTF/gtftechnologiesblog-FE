@@ -8,6 +8,7 @@ const withAuth = (WrappedComponent) => {
 
     useEffect(() => {
       const checkAuth = async () => {
+        if (typeof window === 'undefined') return;
         const token = localStorage.getItem('authToken');
         const expiry = localStorage.getItem('authExpiry');
 

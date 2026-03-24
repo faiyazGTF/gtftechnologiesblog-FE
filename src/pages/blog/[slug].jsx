@@ -1,20 +1,18 @@
-import Hero from "@/components/Hero";
-import BlogCard from "@/components/utilities/BlogCard";
-import Container from "@/components/utilities/Container";
-import LatestBlog from "@/components/utilities/LatestBlog";
-import SearchInput from "@/components/utilities/SearchInput";
-import Section from "@/components/utilities/Section";
+
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
+import BlogSidebar from "@/components/BlogSidebar";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(false);
   const [categoryBlogs, setCategoryBlogs] = useState([]);
+  const [filtercategories, setFiltercategories] = useState([]);
+  const [popularBlogs, setPopularBlogs] = useState([]);
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const router = useRouter();
@@ -38,7 +36,8 @@ const BlogDetails = () => {
 
   useEffect(() => {
     fetchBlog();
-
+    fetchCategories();
+    fetchPopularBlogs();
   }, [slug]); // re-run when slug changes
 
   useEffect(() => {
@@ -123,6 +122,29 @@ const BlogDetails = () => {
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}website/blog-category?limit=100`);
+      setFiltercategories(res.data?.data || []);
+    } catch (err) {
+      console.error("Failed to fetch categories:", err);
+    }
+  };
+
+  const fetchPopularBlogs = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}website/blog?limit=5`);
+      setPopularBlogs(res.data?.data || []);
+    } catch (err) {
+      console.error("Failed to fetch popular blogs:", err);
+    }
+  };
+
+  const handleCategoryToggle = (id) => {
+    // On details page, toggling a category should probably redirect to the blog list with that filter
+    router.push(`/blog?categories=${id}`);
+  };
+
   return (
     <>
       <Head>
@@ -130,6 +152,14 @@ const BlogDetails = () => {
         <meta name="description" content={blog?.meta_description || ""} />
         <meta name="keywords" content={blog?.meta_keywords || ""} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+        />
       </Head>
 
       <section className="blog-platter">
@@ -170,7 +200,7 @@ const BlogDetails = () => {
 
                     <div className="big-box-multiple">
                       <h4 className="main-heading">{blog?.category?.name}</h4>
-                      <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
+                      <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
                     </div>
 
                     {categoryBlogs && categoryBlogs.length > 0 && (
@@ -199,87 +229,14 @@ const BlogDetails = () => {
 
             <div className="col-sm-3">
               <div className="small-box">
-
-
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-
-                  <div className="card">
-                    <div className="card-header" role="tab" id="accordionHeadingOne">
-                      <div className="mb-0 row">
-                        <div className="col-12 no-padding accordion-head">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyOne" aria-expanded="false" aria-controls="accordionBodyOne"
-                            className="collapsed">
-                            <i className="fa fa-angle-down" aria-hidden="true"></i>
-                            <h5>Categories</h5>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div id="accordionBodyOne" className="collapse show" role="tabpanel" aria-labelledby="accordionHeadingOne" aria-expanded="false" data-parent="accordion">
-                      <div className="card-block col-12">
-                        <form action="/action_page.php" >
-                          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-                          <label htmlFor="vehicle1"> Digital Marketing</label><br />
-                          <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" />
-                          <label htmlFor="vehicle2"> News & Awards</label><br />
-                          <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-                          <label htmlFor="vehicle3"> Content Marketing</label><br />
-                          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-                          <label htmlFor="vehicle1"> Website Designing</label><br />
-                          <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" />
-                          <label htmlFor="vehicle2"> Social Media</label><br />
-                          <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-                          <label htmlFor="vehicle3"> Branding</label><br />
-                          <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-                          <label htmlFor="vehicle3"> Paid Marketing</label><br />
-                          <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-                          <label htmlFor="vehicle3"> SEO</label>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <div className="gap"></div>
-
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-
-                  <div className="card">
-                    <div className="card-header" role="tab" id="accordionHeadingTwo">
-                      <div className="mb-0 row">
-                        <div className="col-12 no-padding accordion-head">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyTwo" aria-expanded="false" aria-controls="accordionBodyTwo"
-                            className="collapsed">
-                            <i className="fa fa-angle-down" aria-hidden="true"></i>
-                            <h5>Popular Posts</h5>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div id="accordionBodyTwo" className="collapse show" role="tabpanel" aria-labelledby="accordionHeadingTwo" aria-expanded="false" data-parent="accordion">
-                      <div className="card-block col-12">
-                        <ul>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                          <li><a href="">Real Estate Digital Marketing Agencies Why GTF Technologies is...</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-
+                <BlogSidebar
+                  filtercategories={filtercategories}
+                  data={popularBlogs}
+                  checkCategories={[]}
+                  handleCategoryToggle={handleCategoryToggle}
+                  filter={false}
+                />
               </div>
-
-
             </div>
           </div>
         </div>

@@ -1,4 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Hide Next.js dev overlay badge */
+[data-nextjs-toast-wrapper],
+[data-nextjs-indicator],
+nextjs-portal,
+nextjs-static-indicator,
+.nextjs-toast-errors-parent {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 
 /* Common utility styles for shared components */
 .section-spacing {

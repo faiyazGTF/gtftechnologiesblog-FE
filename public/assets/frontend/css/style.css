@@ -2156,3 +2156,9 @@ button:focus {
 ul {
     list-style-type: disc;
 }
+
+.arrow_button {
+    display: flex;
+    align-items: center;
+    color: #333;
+}

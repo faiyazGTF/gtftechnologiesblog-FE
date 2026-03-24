@@ -21,6 +21,7 @@ const AdminAddBlogPage = () => {
     formState: { errors },
     reset,
     setValue,
+    trigger,
   } = useForm();
 const router = useRouter();
 const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL
@@ -75,8 +76,8 @@ const fields = [
   { label: 'Date', name: 'date_at', placeholder: 'Select Date', col: 'md:col-span-6 lg:col-span-4', type: 'date' },
   { label: 'Mobile Image', name: 'mobile_image', col: 'md:col-span-6 lg:col-span-4', type: 'image' },
   { label: 'Desktop Image', name: 'feature_image', col: 'md:col-span-6 lg:col-span-4', type: 'image' },
-  { label: 'Alt Tag', name: 'alt', placeholder: 'Enter Alt', col: 'md:col-span-3 lg:col-span-2' },
-  { label: 'Slug', name: 'slug', placeholder: 'Enter Slug', col: 'md:col-span-3 lg:col-span-2' },
+  { label: 'Alt Tag', name: 'alt', placeholder: 'Enter Alt', col: 'md:col-span-3 lg:col-span-4' },
+  { label: 'Slug', name: 'slug', placeholder: 'Enter Slug', col: 'md:col-span-3 lg:col-span-4' },
   { label: 'Blog Content', name: 'description', col: 'md:col-span-12', type: 'editor' },
   { label: 'Meta Title', name: 'meta_title', placeholder: 'Enter Meta Title', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
   { label: 'Meta Keyword', name: 'meta_keywords', placeholder: 'Enter Meta Keyword', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
@@ -152,7 +153,11 @@ return (
                     field.type === 'image'
                       ? (e) => handleImageChange(e, field.name)
                       : field.type === 'editor'
-                        ? setEditorValue
+                        ? (content) => {
+                          setEditorValue(content);
+                          setValue(field.name, content);
+                          trigger(field.name);
+                        }
                         : undefined
                   }
                   preview={preview[field.name]}

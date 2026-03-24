@@ -24,6 +24,7 @@ const EditBlog = () => {
     formState: { errors },
     reset,
     setValue,
+    trigger,
   } = useForm();
   const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL
   const API_ASSETS = process.env.NEXT_PUBLIC_API_URL;
@@ -177,7 +178,11 @@ return (
                     field.type === 'image'
                       ? (e) => handleImageChange(e, field.name)
                       : field.type === 'editor'
-                        ? setEditorValue
+                        ? (content) => {
+                          setEditorValue(content);
+                          setValue(field.name, content);
+                          trigger(field.name);
+                        }
                         : undefined
                   }
                   preview={preview[field.name]}

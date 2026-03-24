@@ -23,7 +23,7 @@ const Blogs = () => {
   const [checkCategories, setCheckCategories] = useState([]);
 
   const [loading, setLoading] = useState(false);
-  const limit = 4;
+  const limit = 20;
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
@@ -130,8 +130,8 @@ const Blogs = () => {
                         <div className="big-box-multiple">
                           <h4 className="main-heading">{cat.name}</h4>
                           {
-                            cat.blogs.length > 3 && (
-                              <Link href={`/category/${cat.slug}`}><button className="btn btn-default btn-multi">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                            cat.blogs.length >= 3 && (
+                              <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
                             )
                           }
                         </div>
