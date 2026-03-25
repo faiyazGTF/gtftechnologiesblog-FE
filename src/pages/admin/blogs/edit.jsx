@@ -27,7 +27,6 @@ const EditBlog = () => {
     trigger,
   } = useForm();
   const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL
-  const API_ASSETS = process.env.NEXT_PUBLIC_API_URL;
 
   const [editorValue, setEditorValue] = useState('');
   const [images, setImages] = useState({});

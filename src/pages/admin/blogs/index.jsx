@@ -27,7 +27,6 @@ const AdminBlogsPage = () => {
   const limit = 5;
   const Thead = ['Title', 'Feature Image', 'Mobile Image', 'Action', 'Description'];
   const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
-  const API_ASSETS = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchBlogs = async (page = 1) => {
     try {
@@ -114,28 +113,28 @@ const AdminBlogsPage = () => {
                           </TableData>
                           <TableData>
                             <Image
-                              src={`${API_ASSETS}${blog.feature_image}`}
+                              src={`${blog.feature_image}`}
                               alt="feature"
                               width={40}
                               height={40}
                               className="rounded object-cover mx-auto cursor-pointer"
                               onClick={() =>
                                 openLightbox(
-                                  `${API_ASSETS}${blog.feature_image}`
+                                  `${blog.feature_image}`
                                 )
                               }
                             />
                           </TableData>
                           <TableData>
                             <Image
-                              src={`${API_ASSETS}${blog.mb_image}`}
+                              src={`${blog.mb_image}`}
                               alt="mobile"
                               width={40}
                               height={40}
                               className="rounded object-cover mx-auto cursor-pointer"
                               onClick={() =>
                                 openLightbox(
-                                  `${API_ASSETS}${blog.mb_image}`
+                                  `${blog.mb_image}`
                                 )
                               }
                             />

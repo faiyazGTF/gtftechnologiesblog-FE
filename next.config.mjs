@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
+  images: {
+    domains: ['api-blog.gtftechnologies.com'],
+  },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
