@@ -25,11 +25,8 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 # Build the project
 RUN npm run build
 
-# Install a simple static server since 'output: export' is enabled
-RUN npm install -g serve
-
-# Expose port 3007
+# Start the Next.js server
 EXPOSE 3007
 
-# Start serving the 'out' directory on 3007
-CMD ["serve", "-s", "out", "-l", "3007"]
+# Start the Next.js server on port 3007
+CMD ["npm", "start", "--", "-p", "3007"]

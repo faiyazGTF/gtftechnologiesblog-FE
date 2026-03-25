@@ -2178,3 +2178,13 @@ ul {
 .submenu.collapse {
     visibility: visible;
 }
+
+.two-line-text {
+    margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    max-height: calc(1.5em * 2.5);
+}

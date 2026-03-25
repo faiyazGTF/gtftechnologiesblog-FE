@@ -16,11 +16,11 @@ const Card = ({ data }) => {
   }
   return (
 
-    <div className="inner-smb">
+    <div className="  ">
       <img src={data.feature_image} width="100%" alt={data.heading} />
       <div className="content">
-        <span className="catogories">{data.heading}</span>
-        <p className="main-text">{data.short_description}</p>
+        <span className="catogories two-line-text">{data.heading}</span>
+        <p className="main-text two-line-text">{data.short_description}</p>
         <p className="btn-action">
           <span className="calander d-flex align-items-center">
             <img src="/assets/frontend/images/check-mark.png" width="16px" alt="check" /> {changeDateFormate(data.date_at)}
