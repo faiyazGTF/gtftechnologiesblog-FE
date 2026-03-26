@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import NavLink from "@/components/utilities/NavLink";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import InputField from "./admin/InputFiels";
+import axiosAdmin from "@/login/axiosAdmin";
+import axios from "axios";
+import WebsiteInputFields from "./WebsiteInputFields";
 
 const BlogSidebar = ({ filtercategories, data, checkCategories, handleCategoryToggle, filter }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        setValue,
+        trigger,
+    } = useForm();
+
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+
+        await axios.post(
+            `https://api2.gtftech.com/AjaxHelper/AgentInstantQuerySetter.aspx?qAgentID=4587&qSenderName=${data.name}&qMobileNo=${data.phone}&qQueryMessage=${data.message}&qProjectName=GTF BLOG&qEmailID=${data.email}`,
+        );
+        toast.success('Form Submitted successfully!');
+        reset();
+        setIsSubmitting(false);
+
+    };
+
+    const fields = [
+
+        { label: '', name: 'name', placeholder: 'Enter Name', col: 'md:col-span-12 lg:col-span-12' },
+        { label: '', name: 'email', placeholder: 'Enter Email', col: 'md:col-span-12 lg:col-span-12', type: 'text' },
+        { label: '', name: 'phone', placeholder: 'Enter Phone', col: 'md:col-span-12 lg:col-span-12', type: 'text' },
+        { label: '', name: 'message', placeholder: 'Enter Message', col: 'md:col-span-12 lg:col-span-12', type: 'text' },
+    ];
+
+
+
     // data is expected to be an array of blogs
     const blogs = data || [];
 
@@ -78,6 +117,26 @@ const BlogSidebar = ({ filtercategories, data, checkCategories, handleCategoryTo
                     </div>
                 </div>
             )}
+            <div className="gap"></div>
+            <div class="form-box">
+                <h4>Get in Touch</h4>
+                <form onSubmit={handleSubmit(onSubmit)} >
+                    <div className="">
+                        {fields.map((field) => (
+                            <WebsiteInputFields
+                                key={field.name}
+                                {...field}
+                                register={register}
+                                placeholder={field.placeholder}
+                                error={errors[field.name]}
+                            />
+                        ))}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" disabled={isSubmitting}> {isSubmitting ? 'Submit...' : 'Submit'}</button>
+                </form>
+
+            </div>
         </div>
     </>)
 }

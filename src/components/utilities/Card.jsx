@@ -16,21 +16,23 @@ const Card = ({ data }) => {
   }
   return (
 
-    <div className="  ">
-      <img src={data.feature_image} width="100%" alt={data.heading} />
-      <div className="content">
-        <span className="catogories two-line-text">{data.heading}</span>
-        <p className="main-text two-line-text">{data.short_description}</p>
-        <p className="btn-action">
-          <span className="calander d-flex align-items-center">
-            <img src="/assets/frontend/images/check-mark.png" width="16px" alt="check" /> {changeDateFormate(data.date_at)}
-          </span>
-          <Link href={`/blog/${data.slug}`}>
+    <Link href={`/blog/${data.slug}`} className="card-link">
+      <div className=" inner-smb ">
+        <img src={data.feature_image} width="100%" alt={data.heading} />
+        <div className="content">
+          <span className="catogories two-line-text mb-0">{data.heading}</span>
+          <p className="main-text two-line-text">{data.short_description}</p>
+          <p className="btn-action">
+            <span className="calander d-flex align-items-center">
+              <img src="/assets/frontend/images/check-mark.png" width="16px" alt="check" /> {changeDateFormate(data.date_at)}
+            </span>
+
             <span><img src="/assets/frontend/images/right-ar.png" width="16px" alt="arrow" /> </span>
-          </Link>
-        </p>
-      </div>
-    </div>
+
+          </p>
+        </div>
+      </div >
+    </Link>
 
   );
 };

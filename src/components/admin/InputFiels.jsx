@@ -65,7 +65,7 @@ const InputField = ({
                 if (regRest.onChange) regRest.onChange(e);
                 if (onChange) onChange(e);
               }}
-              className="bg-white font-montserrat appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:border-transparent focus:z-10 sm:text-sm"
+              className="form-control bg-white font-montserrat appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:border-transparent focus:z-10 sm:text-sm"
             />
             {preview && (
               <img
@@ -80,7 +80,7 @@ const InputField = ({
             type={type}
             {...regRest}
             onBlur={handleBlur}
-            className="bg-white font-montserrat appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:border-transparent focus:z-10 sm:text-sm"
+            className="form-control bg-white font-montserrat appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:border-transparent focus:z-10 sm:text-sm"
             placeholder={placeholder}
           />
         )}

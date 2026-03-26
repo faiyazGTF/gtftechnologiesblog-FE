@@ -2182,9 +2182,18 @@ ul {
 .two-line-text {
     margin-bottom: 18px;
     display: -webkit-box;
+    color: #212529;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.5;
     max-height: calc(1.5em * 2.5);
+}
+
+.card-link:hover {
+    text-decoration: none;
+}
+
+.calander {
+    color: #212529;
 }

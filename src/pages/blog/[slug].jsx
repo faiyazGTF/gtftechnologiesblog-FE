@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
+import FAQAccordion from "@/components/Faqaccordion";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
@@ -49,7 +50,6 @@ const BlogDetails = () => {
       const initOwl = async () => {
         const $ = (await import("jquery")).default;
 
-        // Polyfill for $.camelCase if it's missing (required by some versions of Owl Carousel)
         if (!$.camelCase) {
           $.camelCase = function (string) {
             return string.replace(/-([a-z])/g, function (all, letter) {
@@ -58,7 +58,6 @@ const BlogDetails = () => {
           };
         }
 
-        // Polyfill for $.type if it's missing (required by some versions of Owl Carousel)
         if (!$.type) {
           $.type = function (obj) {
             return obj == null ? String(obj) : Object.prototype.toString.call(obj).replace(/^\[object\s(.*)\]$/, "$1").toLowerCase();
@@ -86,7 +85,7 @@ const BlogDetails = () => {
             autoplay: true,
             autoplayTimeout: 4000,
             autoplayHoverPause: true,
-            navText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
+            navText: ['<span className="fa fa-angle-left"></span>', '<span className="fa fa-angle-right"></span>'],
             responsive: {
               0: { items: 1 },
               480: { items: 1 },
@@ -194,7 +193,7 @@ const BlogDetails = () => {
                       </ul>
 
                       <div className="img-box">
-                        <img src={blog?.feature_image} width="100%" />
+                        <img src={blog?.feature_image} width="100%" alt={blog?.heading || "Blog image"} />
                       </div>
 
                       <div dangerouslySetInnerHTML={{ __html: blog?.description }} />
@@ -202,7 +201,7 @@ const BlogDetails = () => {
                       {
                         blog?.toc && blog?.toc.length > 0 && (
                           <>
-                            <div class="inner-d-box">
+                            <div className="inner-d-box">
                               <h5>Table of Contents</h5>
                               <ul className="toc-list">
                                 {blog?.toc?.map((item, index) => (
@@ -212,8 +211,8 @@ const BlogDetails = () => {
                             </div>
                             {blog?.toc?.map((item, index) => (
                               <>
-                                <h4 class="main-heading">{item.title}</h4>
-                                <p class="para-details" dangerouslySetInnerHTML={{ __html: blog?.description }} />
+                                <h4 className="main-heading">{item.title}</h4>
+                                <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
 
 
 
@@ -255,6 +254,12 @@ const BlogDetails = () => {
 
 
                   </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-sm-12">
+                  <FAQAccordion blog_id={blog?.id} />
                 </div>
               </div>
             </div>

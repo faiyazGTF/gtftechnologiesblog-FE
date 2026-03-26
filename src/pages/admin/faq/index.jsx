@@ -18,25 +18,33 @@ import Section from '@/components/utilities/Section';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-const AdminBlogsPage = () => {
-  const [blogs, setBlogs] = useState([]);
+import { useRouter } from 'next/router';
+const BlogFaq = () => {
+  const [pagedata, setPageData] = useState([]);
+
+  const [toc, setToc] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState('');
   const limit = 5;
-  const Thead = ['Title', 'Feature Image', 'Mobile Image', 'Action', 'Others'];
+  const Thead = ['Name', 'Action'];
   const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
-
-  const fetchBlogs = async (page = 1) => {
+  const router = useRouter();
+  const { blog_id } = router.query;
+  const fetchTOC = async (page = 1) => {
     try {
+      if (!blog_id) {
+        toast.error('Blog ID is required');
+        return;
+      }
 
       const res = await axiosAdmin.get(
-        `${API_ADMIN_URL}blog?page=${page}&limit=${limit}`
+        `${API_ADMIN_URL}blog-faq?blog_id=${blog_id}&page=${page}&limit=${limit}`
       );
 
       const data = res.data;
-      setBlogs(data.data || []);
+      setToc(data.data || []);
       setCurrentPage(data.pagination?.page || 1);
       setTotalPages(data.pagination?.totalPages || 1);
     } catch (error) {
@@ -45,18 +53,29 @@ const AdminBlogsPage = () => {
     }
   };
 
+  const fetchPageData = async (blog_id) => {
+    try {
+      const res = await axiosAdmin.get(`${API_ADMIN_URL}blog/${blog_id}`);
+      if (res.data && res.data.data) {
+        setPageData(res.data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this blog?')) return;
 
     try {
       const res = await axiosAdmin.delete(
-        `${API_ADMIN_URL}blog/${id}`
+        `${API_ADMIN_URL}blog-faq/${id}`
       );
       if (res.data.status) {
-        toast.success('Blog deleted successfully');
-        fetchBlogs(currentPage);
+        toast.success('Toc deleted successfully');
+        fetchTOC(currentPage);
       } else {
-        toast.error('Failed to delete blog');
+        toast.error('Failed to delete category');
       }
     } catch (err) {
       console.error(err);
@@ -64,14 +83,13 @@ const AdminBlogsPage = () => {
     }
   };
 
-  const openLightbox = (src) => {
-    setLightboxImage(src);
-    setLightboxOpen(true);
-  };
 
   useEffect(() => {
-    fetchBlogs(currentPage);
-  }, [currentPage]);
+    if (router.isReady && blog_id) {
+      fetchTOC(currentPage);
+      fetchPageData(blog_id)
+    }
+  }, [currentPage, blog_id, router.isReady]);
 
   return (
     <>
@@ -80,17 +98,17 @@ const AdminBlogsPage = () => {
         <Container>
           <div className="shadow-sm">
             <div className="flex items-center justify-between px-[30px] py-[20px] border-b border-[var(--text-primary)]">
-              <Heading>Blogs</Heading>
+              <Link href={`/admin/blogs`}>Back </Link>
               <Link
-                href="/admin/blogs/add"
+                href={`/admin/faq/add?blog_id=${blog_id}`}
                 className="bg-[var(--text-primary)] text-white px-[30px] py-[10px] rounded-[5px] hover:bg-[var(--text-primary-hover)]"
               >
-                Add Blog
+                Add Faq
               </Link>
             </div>
 
             <div className="bg-white p-[40px]">
-              <h4>All Blogs</h4>
+              <h4>Faq's</h4>
 
               <div className="mt-[30px] overflow-auto">
                 <CustomTable>
@@ -103,46 +121,19 @@ const AdminBlogsPage = () => {
                   </TableHead>
 
                   <TableBody>
-                    {blogs.length > 0 ? (
-                      blogs.map((blog) => (
+                    {toc.length > 0 ? (
+                      toc.map((blog) => (
                         <TableRow key={blog._id}>
-                          <TableData heading={blog.heading && blog.heading.length > 110 ? blog.heading : undefined}>
-                            {blog.heading && blog.heading.length > 110
-                              ? `${blog.heading.slice(0, 110)}...`
-                              : blog.heading}
+                          <TableData heading={blog.question && blog.question.length > 110 ? blog.question : undefined}>
+                            {blog.question && blog.question.length > 110
+                              ? `${blog.question.slice(0, 110)}...`
+                              : blog.question}
                           </TableData>
-                          <TableData>
-                            <Image
-                              src={`${blog.feature_image}`}
-                              alt="feature"
-                              width={40}
-                              height={40}
-                              className="rounded object-cover mx-auto cursor-pointer"
-                              onClick={() =>
-                                openLightbox(
-                                  `${blog.feature_image}`
-                                )
-                              }
-                            />
-                          </TableData>
-                          <TableData>
-                            <Image
-                              src={`${blog.mb_image}`}
-                              alt="mobile"
-                              width={40}
-                              height={40}
-                              className="rounded object-cover mx-auto cursor-pointer"
-                              onClick={() =>
-                                openLightbox(
-                                  `${blog.mb_image}`
-                                )
-                              }
-                            />
-                          </TableData>
+
                           <TableData>
                             <div className="w-full flex items-center justify-center gap-[10px]">
                               <Link
-                                href={`/admin/blogs/edit/?id=${blog.id}`}
+                                href={`/admin/faq/edit/?id=${blog.id}`}
                                 className="hover:bg-[#ecebeb] inline-block  p-[10px] rounded-[5px]"
                               >
                                 <Image
@@ -165,29 +156,12 @@ const AdminBlogsPage = () => {
                               </button>
                             </div>
                           </TableData>
-                          <TableData>
-                            <div className="w-full flex items-center justify-center gap-[10px]">
-                              <Link
-                                href={`/admin/toc?blog_id=${blog.id}`}
-                                className="hover:bg-[#ecebeb] inline-block  p-[10px] rounded-[5px]"
-                              >
-                                TOC
-                              </Link>
-                              <Link
-                                href={`/admin/faq?blog_id=${blog.id}`}
-                                className="hover:bg-[#ecebeb] inline-block  p-[10px] rounded-[5px]"
-                              >
-                                FAQ
-                              </Link>
-
-                            </div>
-                          </TableData>
                         </TableRow>
                       ))
                     ) : (
                       <TableRow>
                         <TableData colSpan={Thead.length} className="text-center">
-                          No blogs found.
+                          No Record found.
                         </TableData>
                       </TableRow>
                     )}
@@ -219,4 +193,4 @@ const AdminBlogsPage = () => {
   );
 };
 
-export default withAuth(AdminBlogsPage);
+export default withAuth(BlogFaq);

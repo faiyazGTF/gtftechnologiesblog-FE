@@ -11,6 +11,7 @@ import axios from "axios";
 import NavLink from "@/components/utilities/NavLink";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
+import BlogSidebar from "@/components/BlogSidebar";
 
 const Blogs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -154,119 +155,13 @@ const Blogs = () => {
 
             <div className="col-sm-3">
               <div className="small-box">
-                {/* <div className="search-box-container mb-4">
-                  <SearchInput
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search blogs..."
-                  />
-                </div> */}
-
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-
-                  <div className="card">
-                    <div className="card-header" role="tab" id="accordionHeadingOne">
-                      <div className="mb-0 row">
-                        <div className="col-12 no-padding accordion-head">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyOne" aria-expanded="false" aria-controls="accordionBodyOne"
-                            className="collapsed">
-                            <i className="fa fa-angle-down" aria-hidden="true"></i>
-                            <h5>Categories</h5>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div id="accordionBodyOne" className="collapse show visible" role="tabpanel" aria-labelledby="accordionHeadingOne" aria-expanded="false" data-parent="accordion">
-                      <div className="card-block col-12">
-                        <form >
-                          {filtercategories.map((item, index) => {
-                            return (
-                              <React.Fragment key={index}>
-                                <input
-                                  type="checkbox"
-                                  id={`cat-${index} `}
-                                  name="categories"
-                                  value={item.id}
-                                  checked={checkCategories.includes(item.id)}
-                                  onChange={() => handleCategoryToggle(item.id)}
-                                />
-                                <label htmlFor={`cat - ${index} `}> {item.name}</label><br />
-                              </React.Fragment>
-                            )
-                          })}
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </div>
-
-                <div className="gap"></div>
-                {blogs && blogs.length > 0 && (
-                  <>
-                    <div id="accordion" role="tablist" aria-multiselectable="true">
-
-                      <div className="card">
-                        <div className="card-header" role="tab" id="accordionHeadingTwo">
-                          <div className="mb-0 row">
-                            <div className="col-12 no-padding accordion-head">
-                              <a data-toggle="collapse" data-parent="#accordion" href="#accordionBodyTwo" aria-expanded="false" aria-controls="accordionBodyTwo"
-                                className="collapsed">
-                                <i className="fa fa-angle-down" aria-hidden="true"></i>
-                                <h5>Popular Posts</h5>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="accordionBodyTwo" className="collapse show visible" role="tabpanel" aria-labelledby="accordionHeadingTwo" aria-expanded="false" data-parent="accordion">
-                          <div className="card-block col-12">
-                            <ul>
-                              {
-                                blogs && blogs.map((blogitem) => {
-                                  return (<>
-                                    <li><NavLink href={`/blog/${blogitem.slug}`}>{blogitem.heading}</NavLink></li>
-                                  </>)
-                                })
-                              }
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  </>
-                )}
-
-
-                <div className="gap"></div>
-
-                {/* <div className="form-box">
-                  <h4>Get in Touch</h4>
-
-                  <form action="/action_page.php">
-                    <div className="form-group">
-                      <input type="text" className="form-control" placeholder="name" id="email" />
-                    </div>
-                    <div className="form-group">
-                      <input type="password" className="form-control" placeholder="Email" id="pwd" />
-                    </div>
-
-                    <div className="form-group">
-                      <input type="password" className="form-control" placeholder="Phone" id="pwd" />
-                    </div>
-
-                    <div className="form-group">
-                      <input type="password" className="form-control" placeholder="Enter password" id="pwd" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                  </form>
-
-                </div> */}
-
-
+                <BlogSidebar
+                  filtercategories={filtercategories}
+                  data={blogs}
+                  checkCategories={[]}
+                  handleCategoryToggle={handleCategoryToggle}
+                  filter={false}
+                />
               </div>
 
 
