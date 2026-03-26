@@ -38,7 +38,7 @@ const InputField = ({
         {type === 'editor' ? (
           <ReactQuill
             theme="snow"
-            value={editPage ? he.decode(value) : value}
+            value={editPage ? (value ? he.decode(value) : '') : (value || '')}
             onChange={onChange}
             className="quill-editor"
           />

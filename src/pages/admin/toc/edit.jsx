@@ -133,7 +133,7 @@ const EditBlog = () => {
           <div className='shadow-sm'>
             <div className="flex items-center justify-between  px-6 py-4 border-b border-[var(--text-primary)]">
               <Link href={`/admin/toc?blog_id=${blogId}`}>Back </Link>
-              <Heading>Edit Blog</Heading>
+              <Heading>Edit Toc</Heading>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow">

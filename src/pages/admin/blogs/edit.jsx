@@ -33,10 +33,18 @@ const EditBlog = () => {
   const [preview, setPreview] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [blogCategoryId, setBlogCategoryId] = useState(null);
 
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  // Once categories are loaded, re-apply the category_id so the select shows the correct default
+  useEffect(() => {
+    if (categories.length > 0 && blogCategoryId) {
+      setValue('category_id', blogCategoryId);
+    }
+  }, [categories, blogCategoryId]);
 
   const fetchCategories = async () => {
     try {
@@ -67,6 +75,7 @@ const EditBlog = () => {
 
       reset(formData); // fill form
       setEditorValue(data.description || '');
+      if (data.category_id) setBlogCategoryId(data.category_id);
       setPreview({
         mobile_image: data.mb_image,
         feature_image: data.feature_image,
@@ -114,99 +123,99 @@ const EditBlog = () => {
     if (id) fetchBlog();
   }, [id]);
 
-const handleImageChange = (e, name) => {
-  const file = e.target.files[0];
-  if (file) {
-    setImages((prev) => ({ ...prev, [name]: file }));
-    setPreview((prev) => ({ ...prev, [name]: URL.createObjectURL(file) }));
-  }
-};
+  const handleImageChange = (e, name) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImages((prev) => ({ ...prev, [name]: file }));
+      setPreview((prev) => ({ ...prev, [name]: URL.createObjectURL(file) }));
+    }
+  };
 
-const onSubmit = async (data) => {
-  setIsSubmitting(true);
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
 
-  try {
-    const formData = new FormData();
-    const excludeFields = ['description', 'mobile_image', 'feature_image', 'mb_image'];
+    try {
+      const formData = new FormData();
+      const excludeFields = ['description', 'mobile_image', 'feature_image', 'mb_image'];
 
-    for (const key in data) {
-      if (!excludeFields.includes(key)) {
-        formData.append(key, data[key]);
+      for (const key in data) {
+        if (!excludeFields.includes(key)) {
+          formData.append(key, data[key]);
+        }
       }
+
+      for (const key in images) {
+        formData.append(key, images[key]);
+      }
+
+      formData.append('description', editorValue);
+
+      await axiosAdmin.put(`${API_ADMIN_URL}blog/${id}`, formData);
+
+      toast.success('Blog updated successfully!');
+      router.push("/admin/blogs");
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
     }
+  };
 
-    for (const key in images) {
-      formData.append(key, images[key]);
-    }
+  // console.log('Form Errors:', errors);
 
-    formData.append('description', editorValue);
+  return (
+    <>
+      <AdminHeader />
+      <Section className='!py-[30px]'>
+        <Container>
+          <div className='shadow-sm'>
+            <div className="flex items-center justify-between  px-6 py-4 border-b border-[var(--text-primary)]">
+              <Heading>Edit Blog</Heading>
+            </div>
 
-    await axiosAdmin.put(`${API_ADMIN_URL}blog/${id}`, formData);
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+                {fields.map((field) => (
+                  <InputField
+                    editPage={true}
+                    key={field.name}
+                    {...field}
+                    register={register}
+                    error={errors[field.name]}
+                    value={field.type === 'editor' ? editorValue : undefined}
+                    onChange={
+                      field.type === 'image'
+                        ? (e) => handleImageChange(e, field.name)
+                        : field.type === 'editor'
+                          ? (content) => {
+                            setEditorValue(content);
+                            setValue(field.name, content);
+                            trigger(field.name);
+                          }
+                          : undefined
+                    }
+                    preview={preview[field.name]}
+                  />
+                ))}
+              </div>
 
-    toast.success('Blog updated successfully!');
-    router.push("/admin/blogs");
-  } catch (error) {
-    console.error(error);
-    setIsSubmitting(false);
-  }
-};
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-fit flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[var(--text-primary)] hover:bg-[var(--text-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--text-primary)] transition-colors duration-200 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                >
+                  {isSubmitting ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </form>
 
-console.log('Form Errors:', errors);
-
-return (
-  <>
-    <AdminHeader />
-    <Section className='!py-[30px]'>
-      <Container>
-        <div className='shadow-sm'>
-          <div className="flex items-center justify-between  px-6 py-4 border-b border-[var(--text-primary)]">
-            <Heading>Edit Blog</Heading>
+            <Toaster position="top-right" />
           </div>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-              {fields.map((field) => (
-                <InputField
-                  editPage={true}
-                  key={field.name}
-                  {...field}
-                  register={register}
-                  error={errors[field.name]}
-                  value={field.type === 'editor' ? editorValue : undefined}
-                  onChange={
-                    field.type === 'image'
-                      ? (e) => handleImageChange(e, field.name)
-                      : field.type === 'editor'
-                        ? (content) => {
-                          setEditorValue(content);
-                          setValue(field.name, content);
-                          trigger(field.name);
-                        }
-                        : undefined
-                  }
-                  preview={preview[field.name]}
-                />
-              ))}
-            </div>
-
-            <div className="pt-4">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-fit flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[var(--text-primary)] hover:bg-[var(--text-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--text-primary)] transition-colors duration-200 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-              >
-                {isSubmitting ? 'Saving...' : 'Save'}
-              </button>
-            </div>
-          </form>
-
-          <Toaster position="top-right" />
-        </div>
-      </Container>
-    </Section>
-  </>
-);
+        </Container>
+      </Section>
+    </>
+  );
 };
 
 export default withAuth(EditBlog);
