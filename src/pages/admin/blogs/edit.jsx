@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
@@ -24,7 +24,6 @@ const EditBlog = () => {
     formState: { errors },
     reset,
     setValue,
-    trigger,
   } = useForm();
   const API_ADMIN_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL
 
@@ -86,7 +85,7 @@ const EditBlog = () => {
     }
   };
 
-  const handleTitleBlur = (e) => {
+  const handleTitleBlur = useCallback((e) => {
     const title = e.target.value;
     if (title) {
       const slug = title
@@ -95,16 +94,16 @@ const EditBlog = () => {
         .replace(/(^-|-$)+/g, '');
       setValue('slug', slug);
     }
-  };
+  }, [setValue]);
 
-  const fields = [
+  const fields = useMemo(() => [
     {
       label: 'Category',
       name: 'category_id',
       placeholder: 'Select Category',
       col: 'md:col-span-6 lg:col-span-4',
       type: 'select',
-      options: [...categories]
+      options: categories
     },
     { label: 'Title', name: 'heading', placeholder: 'Enter Title', col: 'md:col-span-6 lg:col-span-4', onBlur: handleTitleBlur },
     { label: 'Short Description', name: 'short_description', placeholder: 'Enter Short Description', col: 'md:col-span-6 lg:col-span-4' },
@@ -117,19 +116,19 @@ const EditBlog = () => {
     { label: 'Meta Title', name: 'meta_title', placeholder: 'Enter Meta Title', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Meta Keyword', name: 'meta_keywords', placeholder: 'Enter Meta Keyword', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Meta Description', name: 'meta_description', placeholder: 'Enter Meta Description', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
-  ];
+  ], [categories, handleTitleBlur]);
 
   useEffect(() => {
     if (id) fetchBlog();
   }, [id]);
 
-  const handleImageChange = (e, name) => {
+  const handleImageChange = useCallback((e, name) => {
     const file = e.target.files[0];
     if (file) {
       setImages((prev) => ({ ...prev, [name]: file }));
       setPreview((prev) => ({ ...prev, [name]: URL.createObjectURL(file) }));
     }
-  };
+  }, []);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -189,7 +188,6 @@ const EditBlog = () => {
                           ? (content) => {
                             setEditorValue(content);
                             setValue(field.name, content);
-                            trigger(field.name);
                           }
                           : undefined
                     }
