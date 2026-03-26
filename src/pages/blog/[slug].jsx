@@ -227,12 +227,15 @@ const BlogDetails = () => {
 
                     </div>
 
-                    <br /><br />
 
+                    <FAQAccordion blog_id={blog?.id} />
                     <div className="big-box-multiple">
                       <h4 className="main-heading">{blog?.category?.name}</h4>
                       <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
                     </div>
+
+
+
 
                     {categoryBlogs && categoryBlogs.length > 0 && (
                       <div className="inner-sec-owl box-multiple">
@@ -257,11 +260,7 @@ const BlogDetails = () => {
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-sm-12">
-                  <FAQAccordion blog_id={blog?.id} />
-                </div>
-              </div>
+
             </div>
 
             <div className="col-sm-3">
