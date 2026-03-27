@@ -158,7 +158,7 @@ const Blogs = () => {
                   data={blogs}
                   checkCategories={[]}
                   handleCategoryToggle={handleCategoryToggle}
-                  filter={false}
+                  filter={true}
                 />
               </div>
 

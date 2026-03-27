@@ -8,7 +8,7 @@ export default function Document() {
         <meta name="theme-color" content="#ffffff" />
 
         {/* Favicon */}
-        <link rel="icon" href="/assets/images/favicon.webp" />
+        <link rel="icon" href="/assets/images/favicon.ico" />
 
         {/* Default SEO Tags */}
         <meta name="description" content="Liv Interio" />

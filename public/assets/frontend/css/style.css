@@ -710,6 +710,7 @@ h4.main-heading {
 
 #accordion ul {
     padding-left: 18px;
+    list-style: disc;
 }
 
 #accordion ul li {

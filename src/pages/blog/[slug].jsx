@@ -153,8 +153,6 @@ const BlogDetails = () => {
                                 <h4 className="main-heading">{item.title}</h4>
                                 <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
 
-
-
                               </>
                             ))}
                           </>
@@ -169,7 +167,7 @@ const BlogDetails = () => {
 
                     <FAQAccordion blog_id={blog?.id} />
 
-                    
+
                     <div className="big-box-multiple">
                       <h4 className="main-heading">{blog?.category?.name}</h4>
                       <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
