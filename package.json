@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^3.3.0",
+    "@popperjs/core": "^2.11.8",
     "aos": "^2.3.4",
     "axios": "^1.9.0",
+    "bootstrap": "^5.3.8",
     "he": "^1.2.0",
     "html-react-parser": "^5.2.5",
     "jquery": "^4.0.0",

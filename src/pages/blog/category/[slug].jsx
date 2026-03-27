@@ -92,9 +92,6 @@ const CategoryDetails = () => {
               {blogs && blogs.map((blogitem) => {
                 return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
               })}
-
-
-
             </div>
           </div>
 

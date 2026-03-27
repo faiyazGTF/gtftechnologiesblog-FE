@@ -6,7 +6,7 @@ const axiosAdmin = axios.create({
 });
 
 axiosAdmin.interceptors.request.use((config) => {
-  if (typeof window !== 'undefined' && window.localStorage) {
+  if (typeof window !== 'undefined' && window.localStorage && typeof window.localStorage.getItem === 'function') {
     const token = window.localStorage.getItem('authToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
