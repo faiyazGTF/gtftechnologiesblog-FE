@@ -1,8 +1,7 @@
 import '@/styles/fonts.css';
 import '@/styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../public/assets/frontend/css/style.css';
 import { useRouter } from 'next/router';
 import '@/styles/tailwind-admin.css'; // We'll handle this purely by CSS scope if needed, or import it here

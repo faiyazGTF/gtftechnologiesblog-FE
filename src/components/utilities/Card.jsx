@@ -27,7 +27,7 @@ const Card = ({ data }) => {
               <img src="/assets/frontend/images/check-mark.png" width="16px" alt="check" /> {changeDateFormate(data.date_at)}
             </span>
 
-            <span><img src="/assets/frontend/images/right-ar.png" width="16px" alt="arrow" /> </span>
+            <span className="link-arrow"><img src="/assets/frontend/images/right-ar.png" width="16px" alt="arrow" /> </span>
 
           </p>
         </div>

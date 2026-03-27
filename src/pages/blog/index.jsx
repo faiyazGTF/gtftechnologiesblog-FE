@@ -6,6 +6,8 @@ import axios from "axios";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
+import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
+import SearchInput from "@/components/utilities/SearchInput";
 
 const Blogs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,6 +22,7 @@ const Blogs = () => {
   const [loading, setLoading] = useState(false);
   const limit = 20;
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const NEXT_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 
   const fetchCategories = async () => {
@@ -125,19 +128,15 @@ const Blogs = () => {
                         <div className="big-box-multiple">
                           <h4 className="main-heading">{cat.name}</h4>
                           {
-                            cat.blogs.length > 3 && (
-                              <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                            cat.blogs.length >= 3 && (
+                              <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi">View All <img src={`/assets/frontend/images/right-down.png`} /> </button></Link>
                             )
                           }
                         </div>
+                        {cat.blogs && cat.blogs.length > 0 && (
+                          <BlogCategorySlider data={cat.blogs} />
+                        )}
 
-                        <div className="box-multiple">
-                          <div className="row">
-                            {cat.blogs && cat.blogs.map((blogitem) => {
-                              return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
-                            })}
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </>)

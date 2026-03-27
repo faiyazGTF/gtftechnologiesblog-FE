@@ -5,11 +5,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Hero from "@/components/Hero";
 import Card from "@/components/utilities/Card";
+import SearchInput from "@/components/utilities/SearchInput";
 
 const CategoryDetails = () => {
   const [category, setCategory] = useState([]);
   const [blogs, setBlogs] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
 
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -34,7 +35,7 @@ const CategoryDetails = () => {
 
   useEffect(() => {
     fetchCategory();
-  }, [slug]);
+  }, [slug, searchTerm]);
 
 
   const fetchBlogs = async (category_id) => {
@@ -42,7 +43,7 @@ const CategoryDetails = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `${BASE_URL}website/blog?category_id=${category_id}`
+        `${BASE_URL}website/blog?category_id=${category_id}&search=${searchTerm}`
       );
       setBlogs(res?.data?.data || null);
 
@@ -83,12 +84,24 @@ const CategoryDetails = () => {
         title={category.name}
       />
       <div className="box-multiple">
-        <section className="blog-platter">
+        <section className="blog-platter category_page">
+
+
+
           <div className="container">
 
 
 
             <div className="row">
+              <div className="col-md-12">
+                <div className="search-box-container mb-4">
+                  <SearchInput
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search blogs..."
+                  />
+                </div>
+              </div>
               {blogs && blogs.map((blogitem) => {
                 return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
               })}

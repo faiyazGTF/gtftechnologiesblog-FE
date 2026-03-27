@@ -844,6 +844,7 @@ h4.main-heading {
 .swiper-wrapper .inner-smb .btn-action .calander img {
     margin-right: 8px;
     width: 16px;
+    height: 16px;
 }
 
 .swiper-wrapper .inner-smb .btn-action .link-arrow img {
@@ -1953,7 +1954,7 @@ h4.main-heading {
 
 .box-multiple .inner-smb .main-text {
     font-size: 13px;
-    line-height: 24px;
+    line-height: 22px;
     padding: 8px 0px;
 }
 
@@ -1966,7 +1967,8 @@ h4.main-heading {
 }
 
 .box-multiple .inner-smb .btn-action span img {
-    width: 13px;
+    width: 14px;
+    height: 14px;
 }
 
 .big-box-multiple {
@@ -2008,7 +2010,7 @@ h4.main-heading {
 }
 
 .page-heading {
-    padding: 10px 15px;
+    padding: 10px 0px;
     padding-bottom: 5px;
 }
 
@@ -2392,4 +2394,17 @@ h4.main-heading {
     .search-box {
         padding-bottom: 20px;
     }
+}
+
+.btn.btn-default.btn-multi {
+    display: flex;
+    align-items: center;
+}
+
+.big-box-multiple a {
+    text-decoration: none;
+}
+
+.category_page .inner-smb {
+    margin-bottom: 20px;
 }

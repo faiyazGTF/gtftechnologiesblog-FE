@@ -7,6 +7,8 @@ import Link from "next/link";
 import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
 import FAQAccordion from "@/components/Faqaccordion";
+import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
+
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
@@ -45,62 +47,6 @@ const BlogDetails = () => {
     fetchPopularBlogs();
   }, [slug]); // re-run when slug changes
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && categoryBlogs.length > 0) {
-      const initOwl = async () => {
-        const $ = (await import("jquery")).default;
-
-        if (!$.camelCase) {
-          $.camelCase = function (string) {
-            return string.replace(/-([a-z])/g, function (all, letter) {
-              return letter.toUpperCase();
-            });
-          };
-        }
-
-        if (!$.type) {
-          $.type = function (obj) {
-            return obj == null ? String(obj) : Object.prototype.toString.call(obj).replace(/^\[object\s(.*)\]$/, "$1").toLowerCase();
-          };
-        }
-
-        window.jQuery = $;
-        window.$ = $;
-        await import("owl.carousel");
-
-        const $owl = $(".owl-carousel1");
-        if ($owl.length > 0) {
-          // Destroy existing instance if any
-          if ($owl.data("owl.carousel")) {
-            $owl.owlCarousel("destroy");
-          }
-
-          $owl.owlCarousel({
-            loop: true,
-            margin: 30,
-            video: true,
-            nav: false,
-            lazyLoad: true,
-            dots: false,
-            autoplay: true,
-            autoplayTimeout: 4000,
-            autoplayHoverPause: true,
-            navText: ['<span className="fa fa-angle-left"></span>', '<span className="fa fa-angle-right"></span>'],
-            responsive: {
-              0: { items: 1 },
-              480: { items: 1 },
-              560: { items: 1 },
-              760: { items: 1 },
-              990: { items: 3 },
-              1200: { items: 3 },
-              1500: { items: 3 }
-            }
-          });
-        }
-      };
-      initOwl();
-    }
-  }, [categoryBlogs]); // Re-init when categoryBlogs data is loaded
 
   const changeDateFormate = (dateString) => {
     const date = new Date(dateString);
@@ -222,6 +168,8 @@ const BlogDetails = () => {
 
 
                     <FAQAccordion blog_id={blog?.id} />
+
+                    
                     <div className="big-box-multiple">
                       <h4 className="main-heading">{blog?.category?.name}</h4>
                       <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
@@ -230,19 +178,7 @@ const BlogDetails = () => {
 
 
 
-                    {categoryBlogs && categoryBlogs.length > 0 && (
-                      <div className="inner-sec-owl box-multiple">
-                        <div className="owl-carousel1 owl-carousel owl-theme box-multiple">
-                          {categoryBlogs.map((item, index) => (
-                            <div className="item" key={index}>
-                              <div className="box drop-shad">
-                                <Card data={item} />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    <BlogCategorySlider data={categoryBlogs} />
 
 
 

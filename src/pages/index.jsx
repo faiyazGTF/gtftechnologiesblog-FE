@@ -120,32 +120,30 @@ const Blogs = () => {
         <div className="container">
 
           <div className="row">
-            <div className="col-sm-9 listing_itemcard_container">
+            <div className="col-sm-9 ">
 
               {categories && categories.map((cat) => {
                 if (cat.blogs.length > 0) {
                   return (<>
 
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <div className="big-box-multiple">
-                          <h4 className="main-heading">{cat.name}</h4>
-                          {
-                            cat.blogs.length >= 3 && (
-                              <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
-                            )
-                          }
-                        </div>
 
-                        <div className="box-multiple">
-                          <div className="row">
-                            {cat.blogs && cat.blogs.map((blogitem) => {
-                              return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
-                            })}
-                          </div>
-                        </div>
+                    <div className="big-box-multiple">
+                      <h4 className="main-heading">{cat.name}</h4>
+                      {
+                        cat.blogs.length >= 3 && (
+                          <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                        )
+                      }
+                    </div>
+
+                    <div className="box-multiple">
+                      <div className="row">
+                        {cat.blogs && cat.blogs.map((blogitem) => {
+                          return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
+                        })}
                       </div>
                     </div>
+
                   </>)
                 }
               })}
