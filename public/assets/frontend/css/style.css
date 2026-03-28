@@ -2409,3 +2409,14 @@ h4.main-heading {
 .category_page .inner-smb {
     margin-bottom: 20px;
 }
+
+.form-box.form-sticky {
+    position: fixed;
+    top: 16px;
+    /* gap from top of viewport */
+    z-index: 100;
+    /* Optional: add a subtle shadow to indicate it's floating */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    /* adjust to match your existing style */
+}

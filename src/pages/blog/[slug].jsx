@@ -1,6 +1,6 @@
 
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -11,6 +11,8 @@ import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
 
 
 const BlogDetails = () => {
+  const sectionRef = useRef(null); // ← add this
+
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(false);
   const [categoryBlogs, setCategoryBlogs] = useState([]);
@@ -105,103 +107,109 @@ const BlogDetails = () => {
 
       </Head>
 
-      <section className="blog-platter">
+      <section className="blog-platter" ref={sectionRef}>
 
         <div className="container">
-          <div className="row">
-            <div className="col-sm-9">
+          {!loading && (
+            <div className="row">
+              <div className="col-sm-9">
 
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="big-box">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="big-box">
 
 
-                    <div className="details-blog">
-                      <h4 className="main-heading">{blog?.heading}</h4>
+                      <div className="details-blog">
+                        <h4 className="main-heading">{blog?.heading}</h4>
 
-                      <ul className="inline-details">
-                        <li>
-                          <span className="catogories-det">{blog?.category?.name}</span>
-                        </li>
-                        <li>
-                          <p><span>published:</span> {changeDateFormate(blog?.date_at)}</p>
-                        </li>
-                        {/* <li>
+                        <ul className="inline-details">
+                          <li>
+                            <span className="catogories-det">{blog?.category?.name}</span>
+                          </li>
+                          <li>
+                            <p><span>published:</span> {changeDateFormate(blog?.date_at)}</p>
+                          </li>
+                          {/* <li>
                           <p><span>updated on:</span> Aug 12, 2022</p>
                         </li> */}
-                      </ul>
+                        </ul>
 
-                      <div className="img-box">
-                        <img src={blog?.feature_image} width="100%" alt={blog?.heading || "Blog image"} />
+                        <div className="img-box">
+                          <img src={blog?.feature_image} width="100%" alt={blog?.heading || "Blog image"} />
+                        </div>
+
+                        <div dangerouslySetInnerHTML={{ __html: blog?.description }} />
+
+                        {
+                          blog?.toc && blog?.toc.length > 0 && (
+                            <>
+                              <div className="inner-d-box">
+                                <h5>Table of Contents</h5>
+                                <ul className="toc-list">
+                                  {blog?.toc?.map((item, index) => (
+                                    <li key={index}><a href={`#${item.slug}`}>{item.toc_heading}</a></li>
+                                  ))}
+                                </ul>
+                              </div>
+                              {blog?.toc?.map((item, index) => (
+                                <>
+                                  <div id={item.slug}>
+                                    <h4 className="main-heading">{item.title}</h4>
+                                    <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
+
+                                  </div>
+                                </>
+                              ))}
+                            </>
+                          )
+                        }
+
+
+
+
                       </div>
 
-                      <div dangerouslySetInnerHTML={{ __html: blog?.description }} />
 
-                      {
-                        blog?.toc && blog?.toc.length > 0 && (
-                          <>
-                            <div className="inner-d-box">
-                              <h5>Table of Contents</h5>
-                              <ul className="toc-list">
-                                {blog?.toc?.map((item, index) => (
-                                  <li key={index}>{item.toc_heading}</li>
-                                ))}
-                              </ul>
-                            </div>
-                            {blog?.toc?.map((item, index) => (
-                              <>
-                                <h4 className="main-heading">{item.title}</h4>
-                                <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
+                      <FAQAccordion blog_id={blog?.id} />
 
-                              </>
-                            ))}
-                          </>
-                        )
-                      }
+
+                      <div className="big-box-multiple">
+                        <h4 className="main-heading">{blog?.category?.name}</h4>
+                        <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
+                      </div>
+
+
+
+
+                      <BlogCategorySlider data={categoryBlogs} />
+
+
 
 
 
 
                     </div>
-
-
-                    <FAQAccordion blog_id={blog?.id} />
-
-
-                    <div className="big-box-multiple">
-                      <h4 className="main-heading">{blog?.category?.name}</h4>
-                      <Link href={`/category/${blog?.category?.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="/assets/frontend/images/right-down.png" /> </button></Link>
-                    </div>
-
-
-
-
-                    <BlogCategorySlider data={categoryBlogs} />
-
-
-
-
-
-
                   </div>
                 </div>
+
+
               </div>
 
-
-            </div>
-
-            <div className="col-sm-3">
-              <div className="small-box">
-                <BlogSidebar
-                  filtercategories={filtercategories}
-                  data={popularBlogs}
-                  checkCategories={[]}
-                  handleCategoryToggle={handleCategoryToggle}
-                  filter={false}
-                />
+              <div className="col-sm-3">
+                <div className="small-box">
+                  <BlogSidebar
+                    filtercategories={filtercategories}
+                    data={popularBlogs}
+                    checkCategories={[]}
+                    handleCategoryToggle={handleCategoryToggle}
+                    filter={false}
+                    sectionRef={sectionRef}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
         </div>
       </section >
     </>

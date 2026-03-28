@@ -6,7 +6,7 @@ import Pagination from "@/components/utilities/Pagination";
 import SearchInput from "@/components/utilities/SearchInput";
 import Section from "@/components/utilities/Section";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import NavLink from "@/components/utilities/NavLink";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
 
 const Blogs = () => {
+  const sectionRef = useRef(null); // ← add this
   const [searchTerm, setSearchTerm] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
@@ -115,7 +116,7 @@ const Blogs = () => {
       />
 
 
-      <section className="blog-platter">
+      <section className="blog-platter" ref={sectionRef}>
 
         <div className="container">
 
@@ -159,6 +160,7 @@ const Blogs = () => {
                   checkCategories={[]}
                   handleCategoryToggle={handleCategoryToggle}
                   filter={true}
+                  sectionRef={sectionRef}
                 />
               </div>
 

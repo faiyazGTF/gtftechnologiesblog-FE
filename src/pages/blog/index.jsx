@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
@@ -10,6 +10,7 @@ import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
 import SearchInput from "@/components/utilities/SearchInput";
 
 const Blogs = () => {
+  const sectionRef = useRef(null); // ← add this
   const [searchTerm, setSearchTerm] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
@@ -112,7 +113,7 @@ const Blogs = () => {
       />
 
 
-      <section className="blog-platter">
+      <section className="blog-platter" ref={sectionRef}>
 
         <div className="container">
 
@@ -159,7 +160,13 @@ const Blogs = () => {
 
 
 
-                <BlogSidebar data={blogs} filtercategories={filtercategories} checkCategories={checkCategories} handleCategoryToggle={handleCategoryToggle} filter={true} />
+                <BlogSidebar
+                  sectionRef={sectionRef}
+                  data={blogs}
+                  filtercategories={filtercategories}
+                  checkCategories={checkCategories}
+                  handleCategoryToggle={handleCategoryToggle}
+                  filter={true} />
 
               </div>
 
