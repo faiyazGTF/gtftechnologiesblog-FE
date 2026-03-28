@@ -66,7 +66,7 @@ export default function FAQAccordion({ blog_id }) {
                     border: none;
                     outline: none;
                     text-align: left;
-                    padding: 22px 8px;
+                    padding: 0px;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
