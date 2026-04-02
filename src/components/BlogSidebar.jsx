@@ -126,7 +126,7 @@ const BlogSidebar = ({ filtercategories, data, checkCategories, handleCategoryTo
                                     <ul>
                                         {blogs.map((blogitem, index) => (
                                             <li key={index}>
-                                                <a className="text-capitalize" href={`/blog/${blogitem.slug}`}>
+                                                <a className="text-capitalize" href={`/${blogitem.category.slug}/${blogitem.slug}`}>
                                                     {blogitem.heading}
                                                 </a>
                                             </li>

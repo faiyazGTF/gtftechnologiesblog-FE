@@ -3,7 +3,7 @@ import React from "react";
 import Heading from "./Heading";
 import Link from "next/link";
 
-const Card = ({ data }) => {
+const Card = ({ data, catSlug }) => {
 
   const changeDateFormate = (dateString) => {
     const date = new Date(dateString);
@@ -16,7 +16,7 @@ const Card = ({ data }) => {
   }
   return (
 
-    <Link href={`/blog/${data.slug}`} className="card-link">
+    <Link href={`/${catSlug}/${data.slug}`} className="card-link">
       <div className=" inner-smb ">
         <img src={data.feature_image} width="100%" alt={data.heading} />
         <div className="content">

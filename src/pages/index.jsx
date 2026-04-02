@@ -140,7 +140,7 @@ const Blogs = () => {
                     <div className="box-multiple">
                       <div className="row">
                         {cat.blogs && cat.blogs.map((blogitem) => {
-                          return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
+                          return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} catSlug={cat.slug} /></div>
                         })}
                       </div>
                     </div>

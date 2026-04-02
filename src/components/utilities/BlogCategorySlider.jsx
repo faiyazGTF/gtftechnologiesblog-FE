@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Card from "./Card";
 
-const BlogCategorySlider = ({ data }) => {
+const BlogCategorySlider = ({ data, catSlug }) => {
   if (!data || data.length === 0) return null;
 
   return (
@@ -52,7 +52,7 @@ const BlogCategorySlider = ({ data }) => {
           <SwiperSlide key={index}>
             <div className="item">
               <div className="box drop-shad">
-                <Card data={item} />
+                <Card data={item} catSlug={catSlug} />
               </div>
             </div>
           </SwiperSlide>

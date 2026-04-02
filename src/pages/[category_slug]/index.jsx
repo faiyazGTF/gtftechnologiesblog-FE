@@ -16,13 +16,13 @@ const CategoryDetails = () => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const router = useRouter();
-  const { slug } = router.query;
+  const { category_slug } = router.query;
   const fetchCategory = async () => {
-    if (!slug) return; // Wait until slug is available
+    if (!category_slug) return; // Wait until category is available
     try {
       setLoading(true);
       const res = await axios.get(
-        `${BASE_URL}website/blog-category/${slug}`
+        `${BASE_URL}website/blog-category/${category_slug}`
       );
       setCategory(res?.data?.data || null);
       fetchBlogs(res?.data?.data.id);
@@ -35,7 +35,7 @@ const CategoryDetails = () => {
 
   useEffect(() => {
     fetchCategory();
-  }, [slug, searchTerm]);
+  }, [category_slug, searchTerm]);
 
 
   const fetchBlogs = async (category_id) => {
@@ -103,7 +103,7 @@ const CategoryDetails = () => {
                 </div>
               </div>
               {blogs && blogs.map((blogitem) => {
-                return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} /></div>
+                return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} catSlug={category.category} /></div>
               })}
             </div>
           </div>

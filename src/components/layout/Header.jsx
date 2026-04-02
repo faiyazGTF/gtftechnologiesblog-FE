@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 
@@ -252,13 +253,6 @@ const Header = ({ onOpen }) => {
                 </li>
               </ul>
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
       </div>
@@ -266,7 +260,7 @@ const Header = ({ onOpen }) => {
       <div id="mySidenavoff" className="sidenavoff" style={{ width: isOpen ? "0" : "92px" }}>
         <div className="inner-off">
           <div className="logo">
-            <img src="/assets/images/gtf-logo.svg" width="100%" />
+            <Link href="https://gtftechnologies.com/" className="cursor-pointer"> <img src="/assets/images/gtf-logo.svg" width="100%" /></Link>
           </div>
 
         </div>
