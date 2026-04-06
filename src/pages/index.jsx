@@ -12,8 +12,13 @@ import NavLink from "@/components/utilities/NavLink";
 import Link from "next/link";
 import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
+import { useRouter } from "next/router";
+import useFullUrl from "@/hooks/useFullUrl";
 
 const Blogs = () => {
+
+  const fullUrl = useFullUrl();
+
   const sectionRef = useRef(null); // ← add this
   const [searchTerm, setSearchTerm] = useState("");
   const [blogs, setBlogs] = useState([]);
@@ -82,7 +87,7 @@ const Blogs = () => {
     try {
       setLoading(true);
       const endpoint = searchTerm
-        ? `${BASE_URL}website/blog?search=${searchTerm}}`
+        ? `${BASE_URL}website/blog?search=${searchTerm}`
         : `${BASE_URL}website/blog?page=${page}&limit=${limit}`;
       const res = await axios.get(endpoint);
 
@@ -97,9 +102,57 @@ const Blogs = () => {
   return (
     <>
       <Head>
-        <title> GTF Technologies: Leading Real Estate Digital Marketing Agency </title>
-        <meta name="keywords" content="real estate digital marketing agency, digital marketing agency for real estate, marketing agency for real estate, real estate marketing agency, digital marketing services for real estate" />
-        <meta name="description" content="GTF Technologies is a leading real estate digital marketing agency in India offering PPC, SEO, branding & website development tailored for real estate brands and developers." />
+
+        <title>GTF Technologies Blog — Real Estate Digital Marketing Tips</title>
+        <meta name="keywords" content="real estate digital marketing, SEO tips, PPC strategies, branding insights, social media marketing, digital marketing blog, GTF Technologies blog, marketing trends" />
+        <meta name="description" content="Actionable insights, trends & strategies in real estate digital marketing from experts at GTF Technologies. Learn SEO, PPC, branding & growth hacks." />
+        <link rel="canonical" href={fullUrl} />
+        <meta name="distribution" content="Global" />
+        <meta name="Language" content="English" />
+        <meta name="doc-type" content="Public" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="GTF Technologies" />
+        <meta name="googlebot" content="all, index, follow" />
+        <meta name="YahooSeeker" content="all, index, follow" />
+        <meta name="msnbot" content="all, index, follow" />
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="rating" content="safe for kids" />
+        <meta name="expires" content="never" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="GTF Technologies Blog — Real Estate Digital Marketing Tips" />
+        <meta property="og:description" content="Explore key signs you might be overpaying for a 3 BHK in Whitefield — expert tips on pricing, value, space, and what to watch for when buying in East Bangalore." />
+        <meta property="og:url" content="https://blog.gtftechnologies.com/" />
+        <meta property="og:site_name" content="GTF Technologies" />
+        <meta property="og:image" content="https://gtftechnologies.com/images/og_logo.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@GTFTechnologies" />
+        <meta name="twitter:title" content="GTF Technologies Blog — Real Estate Digital Marketing Tips" />
+        <meta name="twitter:description" content="Explore key signs you might be overpaying for a 3 BHK in Whitefield — expert tips on pricing, value, space, and what to watch for when buying in East Bangalore." />
+        <meta name="twitter:creator" content="@GTFTechnologies" />
+        <meta name="twitter:image" content="https://gtftechnologies.com/images/og_logo.jpg" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "GTF Technologies",
+              "url": "https://gtftechnologies.com/",
+              "logo": "https://gtftechnologies.com/images/og_logo.jpg",
+              "sameAs": [
+                "https://www.facebook.com/Gtftechnologiesindia/",
+                "https://x.com/GtfTechnologies",
+                "https://www.instagram.com/gtf_technologies/",
+                "https://www.youtube.com/@GTFTECHNOLOGIES",
+                "https://in.linkedin.com/company/gtftechnologies",
+                "https://in.pinterest.com/gtftechnologies/"
+              ]
+            })
+          }}
+        />
+
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -114,6 +167,8 @@ const Blogs = () => {
         mobileSrc="/assets/frontend/images/breadcrumb.jpg"
         title="Blogs"
       />
+      {/* //canonial  */}
+      <link rel="canonical" href="https://gtftechnologies.com/blog" />
 
 
       <section className="blog-platter" ref={sectionRef}>

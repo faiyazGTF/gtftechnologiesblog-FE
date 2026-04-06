@@ -7,7 +7,7 @@ import { BlogContent } from './BlogContent'
 import CustomImage from './CustomImage'
 
 const BlogCard = ({ data, detailsPage }) => {
-  const {heading,short_description,feature_image,mb_image,alt, tags="Interior Design",date_at,description,slug} = data;
+  const {heading,short_description,feature_image,mb_image,alt, tags="GTF Blog",date_at,description,slug} = data;
   const titleLimit = 8;
   const peraLimit = 30;
   const BASE_URL =process.env.NEXT_PUBLIC_API_BASE_URL;

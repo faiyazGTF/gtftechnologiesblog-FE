@@ -11,14 +11,7 @@ export default function Document() {
         <link rel="icon" href="/assets/images/favicon.ico" />
 
         {/* Default SEO Tags */}
-        <meta name="description" content="Liv Interio" />
-        <meta name="keywords" content="Liv Interio" />
-        <meta name="author" content="Liv Interio" />
 
-        {/* Open Graph / Social Sharing */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Liv Interio" />
-        <meta property="og:description" content="Liv Interio" />
 
 
         {/* Global Stylesheets */}

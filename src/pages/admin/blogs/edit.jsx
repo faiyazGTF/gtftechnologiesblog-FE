@@ -116,6 +116,8 @@ const EditBlog = () => {
     { label: 'Meta Title', name: 'meta_title', placeholder: 'Enter Meta Title', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Meta Keyword', name: 'meta_keywords', placeholder: 'Enter Meta Keyword', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Meta Description', name: 'meta_description', placeholder: 'Enter Meta Description', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
+    { label: 'Head Tags', name: 'head_tags', placeholder: 'Enter Head Tags', col: 'md:col-span-12 lg:col-span-12', isRequired: false },
+    { label: 'Body Tags', name: 'body_tags', placeholder: 'Enter Body Tags', col: 'md:col-span-12 lg:col-span-12', isRequired: false },
   ], [categories, handleTitleBlur]);
 
   useEffect(() => {

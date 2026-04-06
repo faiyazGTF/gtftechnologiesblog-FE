@@ -6,8 +6,13 @@ import { useRouter } from "next/router";
 import Hero from "@/components/Hero";
 import Card from "@/components/utilities/Card";
 import SearchInput from "@/components/utilities/SearchInput";
+import useFullUrl from "@/hooks/useFullUrl";
 
 const CategoryDetails = () => {
+
+  const fullUrl = useFullUrl();
+
+
   const [category, setCategory] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

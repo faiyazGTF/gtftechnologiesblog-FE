@@ -46,9 +46,7 @@ export default function FAQAccordion({ blog_id }) {
 
             <style>{`
                 .faq-wrapper {
-                    max-width: 860px;
-                    margin: 48px auto;
-                    padding: 0 16px;
+                   
                     font-family: 'Segoe UI', sans-serif;
                 }
 

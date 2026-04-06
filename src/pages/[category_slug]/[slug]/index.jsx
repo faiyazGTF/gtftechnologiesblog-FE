@@ -8,6 +8,7 @@ import Card from "@/components/utilities/Card";
 import BlogSidebar from "@/components/BlogSidebar";
 import FAQAccordion from "@/components/Faqaccordion";
 import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
+import useFullUrl from "@/hooks/useFullUrl";
 
 
 const BlogDetails = () => {
@@ -20,7 +21,7 @@ const BlogDetails = () => {
     const [popularBlogs, setPopularBlogs] = useState([]);
     const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [tocDescription, setTocDescription] = useState('');
-
+    const fullUrl = useFullUrl();
 
     const router = useRouter();
     const { slug } = router.query;
@@ -104,8 +105,11 @@ const BlogDetails = () => {
                 <meta name="description" content={blog?.meta_description || ""} />
                 <meta name="keywords" content={blog?.meta_keywords || ""} />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="canonical" href={fullUrl} />
+                {blog?.head_tags || ""}
 
             </Head>
+            {blog?.body_tags || ""}
 
             <section className="blog-platter" ref={sectionRef}>
 
@@ -120,7 +124,7 @@ const BlogDetails = () => {
 
 
                                             <div className="details-blog">
-                                                <h4 className="main-heading">{blog?.heading}</h4>
+                                                <h1 className="main-heading">{blog?.heading}</h1>
 
                                                 <ul className="inline-details">
                                                     <li>
@@ -144,7 +148,7 @@ const BlogDetails = () => {
                                                     blog?.toc && blog?.toc.length > 0 && (
                                                         <>
                                                             <div className="inner-d-box">
-                                                                <h5>Table of Contents</h5>
+                                                                <h3>Table of Contents</h3>
                                                                 <ul className="toc-list">
                                                                     {blog?.toc?.map((item, index) => (
                                                                         <li key={index}><a href={`#${item.slug}`}>{item.toc_heading}</a></li>
@@ -154,7 +158,7 @@ const BlogDetails = () => {
                                                             {blog?.toc?.map((item, index) => (
                                                                 <>
                                                                     <div id={item.slug}>
-                                                                        <h4 className="main-heading">{item.title}</h4>
+                                                                        <h2 className="main-heading">{item.title}</h2>
                                                                         <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
 
                                                                     </div>

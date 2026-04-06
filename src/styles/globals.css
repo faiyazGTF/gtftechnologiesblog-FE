@@ -809,3 +809,12 @@ button:hover {
     width: 80%;
   }
 }
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+
+}
