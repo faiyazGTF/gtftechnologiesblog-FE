@@ -83,9 +83,7 @@ const AdminAddBlogPage = () => {
     { label: 'Meta Keyword', name: 'meta_keywords', placeholder: 'Enter Meta Keyword', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Meta Description', name: 'meta_description', placeholder: 'Enter Meta Description', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
     { label: 'Head Tags', name: 'head_tags', placeholder: 'Enter Head Tags', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
-    { label: 'Body Tags', name: 'body_tags', placeholder: 'Enter Body Tags', col: 'md:col-span-6 lg:col-span-4', isRequired: false,
-
-
+    { label: 'Body Tags', name: 'body_tags', placeholder: 'Enter Body Tags', col: 'md:col-span-6 lg:col-span-4', isRequired: false },
   ];
   const handleImageChange = (e, name) => {
     const file = e.target.files[0];
