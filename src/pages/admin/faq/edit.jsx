@@ -14,6 +14,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import Section from '@/components/utilities/Section';
 import Link from 'next/link';
+import he from 'he';
 
 const EditBlogFaq = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ const EditBlogFaq = () => {
       };
       setBlogId(data.blog_id);
       reset(formData); // fill form
-      setEditorValue(data.description || '');
+      setEditorValue(data.description ? he.decode(data.description) : '');
     } catch (err) {
       console.error(err);
       toast.error('Failed to load blog data');
@@ -121,7 +122,6 @@ const EditBlogFaq = () => {
                           ? (content) => {
                             setEditorValue(content);
                             setValue(field.name, content);
-                            trigger(field.name);
                           }
                           : undefined
                     }

@@ -68,7 +68,6 @@ const CategoryDetails = () => {
     });
     return formatted;
   }
-  console.log('blogs', blogs);
 
   return (
     <>

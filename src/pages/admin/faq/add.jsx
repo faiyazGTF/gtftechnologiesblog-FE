@@ -123,7 +123,6 @@ const AdminAddBlogFaq = () => {
                           ? (content) => {
                             setEditorValue(content);
                             setValue(field.name, content);
-                            trigger(field.name);
                           }
                           : undefined
                     }

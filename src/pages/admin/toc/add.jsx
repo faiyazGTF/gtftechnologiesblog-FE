@@ -134,7 +134,6 @@ const AdminAddBlogTOC = () => {
                           ? (content) => {
                             setEditorValue(content);
                             setValue(field.name, content);
-                            trigger(field.name);
                           }
                           : undefined
                     }

@@ -68,7 +68,7 @@ const Hero = ({
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="page-heading">
-                                        <h4>{title}</h4>
+                                        <h1>{title}</h1>
 
                                         <ul>
                                             <li><a href=""><i className='fa fa-angle-left'></i></a></li>

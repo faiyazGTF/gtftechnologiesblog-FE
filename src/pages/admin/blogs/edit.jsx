@@ -13,6 +13,7 @@ import withAuth from '@/login/withAuth';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import Section from '@/components/utilities/Section';
+import he from 'he';
 
 const EditBlog = () => {
   const router = useRouter();
@@ -73,7 +74,7 @@ const EditBlog = () => {
       };
 
       reset(formData); // fill form
-      setEditorValue(data.description || '');
+      setEditorValue(data.description ? he.decode(data.description) : '');
       if (data.category_id) setBlogCategoryId(data.category_id);
       setPreview({
         mobile_image: data.mb_image,
