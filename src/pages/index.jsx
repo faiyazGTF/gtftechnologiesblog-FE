@@ -102,7 +102,7 @@ const Blogs = () => {
   return (
     <>
       <Head>
-
+        <meta name="google-site-verification" content="d2xfLBX0ojDABzk6iID4jN8WTINFqWhXyupGiOJouCA" />
         <title>GTF Technologies Blog — Real Estate Digital Marketing Tips</title>
         <meta name="keywords" content="real estate digital marketing, SEO tips, PPC strategies, branding insights, social media marketing, digital marketing blog, GTF Technologies blog, marketing trends" />
         <meta name="description" content="Actionable insights, trends & strategies in real estate digital marketing from experts at GTF Technologies. Learn SEO, PPC, branding & growth hacks." />
