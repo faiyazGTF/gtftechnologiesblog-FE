@@ -15,17 +15,17 @@ import BlogSidebar from "@/components/BlogSidebar";
 import { useRouter } from "next/router";
 import useFullUrl from "@/hooks/useFullUrl";
 
-const Blogs = () => {
+const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
 
   const fullUrl = useFullUrl();
 
   const sectionRef = useRef(null); // ← add this
   const [searchTerm, setSearchTerm] = useState("");
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState(initialBlogs);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [filtercategories, setFiltercategories] = useState([]);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const [categories, setCategories] = useState(initialCategories);
+  const [filtercategories, setFiltercategories] = useState(initialCategories || []);
 
   const [checkCategories, setCheckCategories] = useState([]);
 
@@ -58,10 +58,17 @@ const Blogs = () => {
   };
 
   useEffect(() => {
-    fetchCategories();
+    // Skip initial fetch if we already have server-side data
+    if (!initialCategories || initialCategories.length === 0) {
+      fetchCategories();
+    }
   }, []);
 
   useEffect(() => {
+    // If it's the initial render and we have server data, don't re-fetch
+    const isInitial = page === 1 && searchTerm === "" && checkCategories.length === 0;
+    if (isInitial && initialBlogs.length > 0) return;
+
     const delayDebounce = setTimeout(() => {
       fetchCategories();
       fetchBlogs();
@@ -83,6 +90,7 @@ const Blogs = () => {
     });
     return formatted;
   }
+
   const fetchBlogs = async () => {
     try {
       setLoading(true);
@@ -180,27 +188,26 @@ const Blogs = () => {
 
               {categories && categories.map((cat) => {
                 if (cat.blogs.length > 0) {
-                  return (<>
-
-
-                    <div className="big-box-multiple">
-                      <h4 className="main-heading">{cat.name}</h4>
-                      {
-                        cat.blogs.length >= 3 && (
-                          <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
-                        )
-                      }
-                    </div>
-
-                    <div className="box-multiple">
-                      <div className="row">
-                        {cat.blogs && cat.blogs.map((blogitem) => {
-                          return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} catSlug={cat.slug} /></div>
-                        })}
+                  return (
+                    <React.Fragment key={cat.id}>
+                      <div className="big-box-multiple">
+                        <h4 className="main-heading">{cat.name}</h4>
+                        {
+                          cat.blogs.length >= 3 && (
+                            <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                          )
+                        }
                       </div>
-                    </div>
 
-                  </>)
+                      <div className="box-multiple">
+                        <div className="row">
+                          {cat.blogs && cat.blogs.map((blogitem) => {
+                            return <div className="col-sm-4" key={blogitem.id}> <Card data={blogitem} key={blogitem.id} catSlug={cat.slug} /></div>
+                          })}
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  )
                 }
               })}
 
@@ -230,5 +237,34 @@ const Blogs = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const limit = 20;
+
+  try {
+    const [categoriesRes, blogsRes] = await Promise.all([
+      axios.get(`${BASE_URL}website/blog-category?page=1&limit=${limit}`),
+      axios.get(`${BASE_URL}website/blog?page=1&limit=${limit}`)
+    ]);
+
+    return {
+      props: {
+        initialCategories: categoriesRes.data?.data || [],
+        initialBlogs: blogsRes.data?.data || [],
+        initialTotalPages: blogsRes.data?.pagination?.totalPages || 1,
+      },
+    };
+  } catch (err) {
+    console.error("Error in getServerSideProps:", err);
+    return {
+      props: {
+        initialCategories: [],
+        initialBlogs: [],
+        initialTotalPages: 1,
+      },
+    };
+  }
+}
 
 export default Blogs;

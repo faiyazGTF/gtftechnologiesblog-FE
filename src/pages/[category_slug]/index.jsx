@@ -8,13 +8,13 @@ import Card from "@/components/utilities/Card";
 import SearchInput from "@/components/utilities/SearchInput";
 import useFullUrl from "@/hooks/useFullUrl";
 
-const CategoryDetails = () => {
+const CategoryDetails = ({ initialCategory, initialBlogs }) => {
 
   const fullUrl = useFullUrl();
 
 
-  const [category, setCategory] = useState([]);
-  const [blogs, setBlogs] = useState([]);
+  const [category, setCategory] = useState(initialCategory);
+  const [blogs, setBlogs] = useState(initialBlogs);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +22,7 @@ const CategoryDetails = () => {
 
   const router = useRouter();
   const { category_slug } = router.query;
+
   const fetchCategory = async () => {
     if (!category_slug) return; // Wait until category is available
     try {
@@ -30,16 +31,21 @@ const CategoryDetails = () => {
         `${BASE_URL}website/blog-category/${category_slug}`
       );
       setCategory(res?.data?.data || null);
-      fetchBlogs(res?.data?.data.id);
+      if (res?.data?.data?.id) {
+        fetchBlogs(res?.data?.data.id);
+      }
     } catch (err) {
-      console.error("Failed to fetch blog:", err);
+      console.error("Failed to fetch Category:", err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategory();
+    // Only fetch if we don't have initial data or if category/search changes
+    if (!initialCategory || initialCategory.slug !== category_slug || searchTerm !== "") {
+      fetchCategory();
+    }
   }, [category_slug, searchTerm]);
 
 
@@ -50,7 +56,7 @@ const CategoryDetails = () => {
       const res = await axios.get(
         `${BASE_URL}website/blog?category_id=${category_id}&search=${searchTerm}`
       );
-      setBlogs(res?.data?.data || null);
+      setBlogs(res?.data?.data || []);
 
     } catch (err) {
       console.error("Failed to fetch blog:", err);
@@ -72,7 +78,9 @@ const CategoryDetails = () => {
   return (
     <>
       <Head>
-
+        <title>{category ? `${category.name} - GTF Technologies Blog` : "Blog Category - GTF Technologies"}</title>
+        <meta name="description" content={`Explore articles and insights related to ${category?.name || "our blog categories"} at GTF Technologies.`} />
+        <link rel="canonical" href={fullUrl} />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -85,7 +93,7 @@ const CategoryDetails = () => {
       <Hero
         imageSrc="/assets/frontend/images/breadcrumb.jpg"
         mobileSrc="/assets/frontend/images/breadcrumb.jpg"
-        title={category.name}
+        title={category?.name}
       />
       <div className="box-multiple">
         <section className="blog-platter category_page">
@@ -106,9 +114,15 @@ const CategoryDetails = () => {
                   />
                 </div>
               </div>
-              {blogs && blogs.map((blogitem) => {
-                return <div className="col-sm-4"> <Card data={blogitem} key={blogitem.id} catSlug={category.category} /></div>
+              {!loading && blogs && blogs.map((blogitem) => {
+                return (
+                  <div className="col-sm-4" key={blogitem.id}>
+                    <Card data={blogitem} key={blogitem.id} catSlug={category?.slug} />
+                  </div>
+                )
               })}
+              {loading && <div className="text-center p-5 w-100">Loading...</div>}
+              {!loading && blogs.length === 0 && <div className="text-center p-5 w-100">No blogs found in this category.</div>}
             </div>
           </div>
 
@@ -117,5 +131,38 @@ const CategoryDetails = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { category_slug } = context.params;
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  try {
+    // 1. Fetch category details
+    const catRes = await axios.get(`${BASE_URL}website/blog-category/${category_slug}`);
+    const category = catRes.data?.data || null;
+
+    if (!category) {
+      return { notFound: true };
+    }
+
+    // 2. Fetch blogs for this category
+    const blogsRes = await axios.get(`${BASE_URL}website/blog?category_id=${category.id}`);
+
+    return {
+      props: {
+        initialCategory: category,
+        initialBlogs: blogsRes.data?.data || [],
+      },
+    };
+  } catch (err) {
+    console.error("Error in Category getServerSideProps:", err);
+    return {
+      props: {
+        initialCategory: null,
+        initialBlogs: [],
+      },
+    };
+  }
+}
 
 export default CategoryDetails;
