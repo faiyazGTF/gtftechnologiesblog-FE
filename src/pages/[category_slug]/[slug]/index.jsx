@@ -11,20 +11,21 @@ import BlogCategorySlider from "@/components/utilities/BlogCategorySlider";
 import useFullUrl from "@/hooks/useFullUrl";
 
 
-const BlogDetails = () => {
+const BlogDetails = ({ initialBlog, initialCategoryBlogs, initialFilterCategories, initialPopularBlogs }) => {
     const sectionRef = useRef(null); // ← add this
 
-    const [blog, setBlog] = useState(null);
+    const [blog, setBlog] = useState(initialBlog);
     const [loading, setLoading] = useState(false);
-    const [categoryBlogs, setCategoryBlogs] = useState([]);
-    const [filtercategories, setFiltercategories] = useState([]);
-    const [popularBlogs, setPopularBlogs] = useState([]);
+    const [categoryBlogs, setCategoryBlogs] = useState(initialCategoryBlogs);
+    const [filtercategories, setFiltercategories] = useState(initialFilterCategories);
+    const [popularBlogs, setPopularBlogs] = useState(initialPopularBlogs);
     const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [tocDescription, setTocDescription] = useState('');
     const fullUrl = useFullUrl();
 
     const router = useRouter();
     const { slug } = router.query;
+
     const fetchBlog = async () => {
         if (!slug) return; // Wait until slug is available
 
@@ -34,9 +35,9 @@ const BlogDetails = () => {
                 `${BASE_URL}website/blog/${slug}`
             );
             setBlog(res?.data?.data || null);
-            fetchCategoryBlogs(res?.data?.data?.category?.id);
-
-
+            if (res?.data?.data?.category?.id) {
+                fetchCategoryBlogs(res?.data?.data?.category?.id);
+            }
         } catch (err) {
             console.error("Failed to fetch blog:", err);
         } finally {
@@ -45,13 +46,17 @@ const BlogDetails = () => {
     };
 
     useEffect(() => {
-        fetchBlog();
-        fetchCategories();
-        fetchPopularBlogs();
-    }, [slug]); // re-run when slug changes
+        // Only fetch on client if we don't have initial data or if slug changes
+        if (!initialBlog || initialBlog.slug !== slug) {
+            fetchBlog();
+            fetchCategories();
+            fetchPopularBlogs();
+        }
+    }, [slug]);
 
 
     const changeDateFormate = (dateString) => {
+        if (!dateString) return "";
         const date = new Date(dateString);
         const formatted = date.toLocaleDateString("en-US", {
             month: "long",
@@ -114,7 +119,7 @@ const BlogDetails = () => {
             <section className="blog-platter" ref={sectionRef}>
 
                 <div className="container">
-                    {!loading && (
+                    {!loading && blog && (
                         <div className="row">
                             <div className="col-sm-9">
 
@@ -156,13 +161,13 @@ const BlogDetails = () => {
                                                                 </ul>
                                                             </div>
                                                             {blog?.toc?.map((item, index) => (
-                                                                <>
+                                                                <React.Fragment key={index}>
                                                                     <div id={item.slug}>
                                                                         <h2 className="main-heading">{item.title}</h2>
                                                                         <p className="para-details" dangerouslySetInnerHTML={{ __html: item?.description }} />
 
                                                                     </div>
-                                                                </>
+                                                                </React.Fragment>
                                                             ))}
                                                         </>
                                                     )
@@ -213,11 +218,56 @@ const BlogDetails = () => {
                             </div>
                         </div>
                     )}
+                    {loading && <div className="text-center p-5">Loading...</div>}
+                    {!loading && !blog && <div className="text-center p-5">Blog not found</div>}
 
                 </div>
             </section >
         </>
     );
 };
+
+export async function getServerSideProps(context) {
+    const { slug } = context.params;
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+    try {
+        // 1. Fetch the main blog data
+        const blogRes = await axios.get(`${BASE_URL}website/blog/${slug}`);
+        const blog = blogRes?.data?.data || null;
+
+        if (!blog) {
+            return {
+                notFound: true,
+            };
+        }
+
+        // 2. Fetch other related data in parallel
+        const [categoryBlogsRes, categoriesRes, popularBlogsRes] = await Promise.all([
+            axios.get(`${BASE_URL}website/blog?categories=${blog.category?.id}`),
+            axios.get(`${BASE_URL}website/blog-category?limit=100`),
+            axios.get(`${BASE_URL}website/blog?limit=5`)
+        ]);
+
+        return {
+            props: {
+                initialBlog: blog,
+                initialCategoryBlogs: categoryBlogsRes?.data?.data || [],
+                initialFilterCategories: categoriesRes?.data?.data || [],
+                initialPopularBlogs: popularBlogsRes?.data?.data || [],
+            },
+        };
+    } catch (error) {
+        console.error("Error in getServerSideProps:", error);
+        return {
+            props: {
+                initialBlog: null,
+                initialCategoryBlogs: [],
+                initialFilterCategories: [],
+                initialPopularBlogs: [],
+            },
+        };
+    }
+}
 
 export default BlogDetails;
