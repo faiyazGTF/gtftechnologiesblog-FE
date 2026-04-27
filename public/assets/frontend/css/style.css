@@ -2420,3 +2420,7 @@ h4.main-heading {
     border-radius: 8px;
     /* adjust to match your existing style */
 }
+
+.sidebar .inner-sub {
+    visibility: visible;
+}
