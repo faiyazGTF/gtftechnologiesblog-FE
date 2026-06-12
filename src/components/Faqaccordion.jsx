@@ -120,7 +120,7 @@ export default function FAQAccordion({ blog_id }) {
             `}</style>
 
             <div className="faq-wrapper">
-                <h2 class="text-center mb-4 font-weight-bold">FAQ</h2>
+                <h2 className="text-center mb-4 font-weight-bold">FAQ</h2>
                 {data.map((faq, index) => {
                     const isOpen = openIndex === index;
                     return (
