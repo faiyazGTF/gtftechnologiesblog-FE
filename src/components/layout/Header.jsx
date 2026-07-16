@@ -111,7 +111,12 @@ const Header = ({ onOpen }) => {
         style={{ width: isOpen ? "500px" : "0" }}
       >
         <div className="inner-nav">
-          <img className="brand-logo" src="/assets/images/gtflogo-vector.svg" />
+          <a href="https://www.gtftechnologies.com/">
+            <img
+              className="brand-logo"
+              src="/assets/images/gtflogo-vector.svg"
+            />
+          </a>
 
           <div className="inner-menu">
             <div className="sidebar">
