@@ -779,7 +779,7 @@ h4.main-heading {
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.5;
-  max-height: calc(1.5em * 2.5);
+  min-height: calc(1.4em * 2);
 }
 
 .owl-carousel .owl-nav.disabled {
@@ -828,6 +828,7 @@ h4.main-heading {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-height: 52px;
 }
 
 .swiper-wrapper .inner-smb .btn-action .calander img {
@@ -1937,6 +1938,7 @@ h4.main-heading {
   font-size: 13px;
   line-height: 22px;
   padding: 8px 0px;
+  padding-bottom: 0;
 }
 
 .box-multiple .inner-smb .btn-action .calander {

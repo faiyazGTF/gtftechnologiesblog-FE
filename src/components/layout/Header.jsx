@@ -358,7 +358,7 @@ const Header = ({ onOpen }) => {
 
               <ul className="other_links">
                 <li>
-                  <a href="https://gtftechnologies.com/home/privacy_policy">
+                  <a href="https://www.gtftechnologies.com/privacy_policy">
                     Privacy Policy
                   </a>
                 </li>
