@@ -115,7 +115,7 @@ const Header = ({ onOpen }) => {
 
           <div className="inner-menu">
             <div className="sidebar">
-              <a href="https://gtftechnologies.com/home/index">HOME</a>
+              <a href="https://www.gtftechnologies.com/">HOME</a>
 
               <a href="https://www.gtftechnologies.com/who-we-are/about-gtf">
                 ABOUT US
@@ -198,6 +198,8 @@ const Header = ({ onOpen }) => {
                   Clients
                 </a>
               </div>
+
+              <a href="https://blog.gtftechnologies.com/">BLOGS</a>
 
               <a data-toggle="collapse" href="#hr">
                 HUMAN RESOURCE
