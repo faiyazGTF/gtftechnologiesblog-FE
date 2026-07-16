@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-
 const Header = ({ onOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
@@ -13,12 +12,7 @@ const Header = ({ onOpen }) => {
     setIsOpen(!isOpen);
   };
 
-
-
-
   useEffect(() => {
-
-
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -44,8 +38,8 @@ const Header = ({ onOpen }) => {
 
   useEffect(() => {
     // Force cleanup on mount
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
   }, []);
 
   useEffect(() => {
@@ -54,14 +48,14 @@ const Header = ({ onOpen }) => {
       // document.body.style.overflow = 'hidden';
     } else {
       // Enable scroll
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
 
     // Clean up on component unmount
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isOpen]);
 
@@ -73,23 +67,37 @@ const Header = ({ onOpen }) => {
       window.jQuery = $;
       window.$ = $;
 
-      $('.sidebar a[data-toggle="collapse"]').off('click').on('click', function (e) {
-        e.preventDefault();
-        const targetSelector = $(this).attr('href');
-        const $target = $(targetSelector);
+      $('.sidebar a[data-toggle="collapse"]')
+        .off("click")
+        .on("click", function (e) {
+          e.preventDefault();
+          const targetSelector = $(this).attr("href");
+          const $target = $(targetSelector);
 
-        // Accordion behavior: Close other open menus
-        $('.sidebar .collapse').not($target).slideUp().removeClass('show');
-        $('.sidebar a[data-toggle="collapse"] .arrow').not($(this).find('.arrow')).removeClass('rotate');
+          // Accordion behavior: Close other open menus
+          $(".sidebar .collapse")
+            .not($target)
+            .not($(this).parents(".collapse"))
+            .slideUp()
+            .removeClass("show");
+          $('.sidebar a[data-toggle="collapse"] .arrow')
+            .not($(this).find(".arrow"))
+            .not(
+              $(this)
+                .parents(".collapse")
+                .prevAll('a[data-toggle="collapse"]')
+                .find(".arrow"),
+            )
+            .removeClass("rotate");
 
-        // Toggle current menu
-        $target.slideToggle().toggleClass('show');
-        $(this).find('.arrow').toggleClass('rotate');
+          // Toggle current menu
+          $target.slideToggle().toggleClass("show");
+          $(this).find(".arrow").toggleClass("rotate");
 
-        // Active class handling
-        $('.sidebar a').removeClass('active');
-        $(this).addClass('active');
-      });
+          // Active class handling
+          $(".sidebar a").removeClass("active");
+          $(this).addClass("active");
+        });
     };
 
     initSidebar();
@@ -97,35 +105,42 @@ const Header = ({ onOpen }) => {
 
   return (
     <>
-      <div id="mySidenav" className={`sidenav ${isOpen ? "active" : ""}`} style={{ width: isOpen ? "500px" : "0" }}>
+      <div
+        id="mySidenav"
+        className={`sidenav ${isOpen ? "active" : ""}`}
+        style={{ width: isOpen ? "500px" : "0" }}
+      >
         <div className="inner-nav">
           <img className="brand-logo" src="/assets/images/gtflogo-vector.svg" />
 
           <div className="inner-menu">
-
             <div className="sidebar">
-
               <a href="https://gtftechnologies.com/home/index">HOME</a>
 
-              <a data-toggle="collapse" className="active" href="#whoWeAre" role="button">
-                WHO WE ARE
-                <span className="arrow">&#8250;</span>
+              <a href="https://www.gtftechnologies.com/who-we-are/about-gtf">
+                ABOUT US
               </a>
 
-              <div className="collapse submenu inner-sub" id="whoWeAre">
-                <a href="https://gtftechnologies.com/about-gtf">About Us</a>
-                <a href="https://gtftechnologies.com/home/partners_tools">Partners & Tools</a>
-              </div>
-
               <a data-toggle="collapse" href="#howWork">
-                HOW WE WORK
+                PROCESS OF WORKING
                 <span className="arrow">&#8250;</span>
               </a>
               <div className="collapse submenu inner-sub" id="howWork">
-                <a href="https://gtftechnologies.com/home/SEO_keyword_research">Research</a>
-                <a href="https://gtftechnologies.com/home/digital_media_planning">Digital Media Planning</a>
-                <a href="https://gtftechnologies.com/home/contentcreative">Concept Content & Creative</a>
-                <a href="https://gtftechnologies.com/home/data_analysis_roi">Data Analysis & ROI</a>
+                <a href="https://www.gtftechnologies.com/how-we-work/SEO_keyword_research">
+                  Research
+                </a>
+                <a href="https://gtftechnologies.com/brand-strategy-launch">
+                  Brand Strategy Launch
+                </a>
+                <a href="https://www.gtftechnologies.com/how-we-work/digital_media_planning">
+                  Digital Media Planning
+                </a>
+                <a href="https://www.gtftechnologies.com/how-we-work/contentcreative">
+                  Concept Content & Creative
+                </a>
+                <a href="https://www.gtftechnologies.com/how-we-work/data_analysis_roi">
+                  Data Analysis & ROI
+                </a>
               </div>
 
               <a data-toggle="collapse" href="#services">
@@ -133,26 +148,30 @@ const Header = ({ onOpen }) => {
                 <span className="arrow">&#8250;</span>
               </a>
               <div className="collapse submenu inner-sub" id="services">
-                <a href="https://gtftechnologies.com/brand-strategy.html">Brand Strategy</a>
-                <a href="https://gtftechnologies.com/creative.html">Creative</a>
-                <a href="https://gtftechnologies.com/communication.html">Communication</a>
-                <a href="https://gtftechnologies.com/home/website_design_development">Website Design & Development</a>
-                <a href="https://gtftechnologies.com/web-&-mobile-app-testing.html">Web & Mobile App Testing</a>
-                <a href="https://gtftechnologies.com/home/website_annual_maintenance">Website’s Annual Maintenance</a>
-                <a href="https://gtftechnologies.com/home/search_engine_optimization">Search Engine Optimization</a>
-                <a href="https://gtftechnologies.com/home/paid_ads">Google Ads</a>
-                <a href="https://gtftechnologies.com/home/display_marketing">Display Marketing</a>
-                <a href="https://gtftechnologies.com/home/youtube_marketing">YouTube Marketing</a>
-                <a href="https://gtftechnologies.com/home/social_media_optimization">Social Media Optimization</a>
-                <a href="https://gtftechnologies.com/home/social_media_marketing">Social Media Marketing</a>
-                <a href="https://gtftechnologies.com/home/online_reputation_management_marketing">Online Reputation Management Marketing</a>
+                <a href="https://www.gtftechnologies.com/services/brand-strategy">
+                  Brand Strategy
+                </a>
+                <a href="https://www.gtftechnologies.com/services/social-media-amplification">
+                  Social Media Amplification
+                </a>
+                <a href="https://www.gtftechnologies.com/services/website-creative">
+                  Website Creative
+                </a>
+                <a href="https://www.gtftechnologies.com/services/digital-marketing">
+                  Digital Marketing
+                </a>
+                <a href="https://www.gtftechnologies.com/services/ai-innovation">
+                  AI Innovation
+                </a>
+                <a href="https://www.gtftechnologies.com/services/celebrity-influencer-marketing">
+                  Celebrity/Influencer Marketing
+                </a>
               </div>
 
               <a data-toggle="collapse" href="#work">
                 WORK
                 <span className="arrow">&#8250;</span>
               </a>
-
 
               <div className="collapse submenu inner-sub" id="work">
                 <a data-toggle="collapse" href="#portfolioSub">
@@ -161,15 +180,23 @@ const Header = ({ onOpen }) => {
                 </a>
 
                 <div className="collapse submenu inner-sub" id="portfolioSub">
-                  <a href="https://gtftechnologies.com/home/websites_landing_pages">Web Design</a>
-                  <a href="https://gtftechnologies.com/home/creatives">Creatives</a>
-                  <a href="https://gtftechnologies.com/home/logos">logos</a>
+                  <a href="https://www.gtftechnologies.com/work/portfolio/websites_landing_pages">
+                    Websites & Landing Pages
+                  </a>
+                  <a href="https://www.gtftechnologies.com/work/portfolio/creatives">
+                    Creatives & AI Videos
+                  </a>
+                  <a href="https://www.gtftechnologies.com/work/portfolio/logos">
+                    Logos
+                  </a>
                 </div>
 
-
-                <a href="https://gtftechnologies.com/home/case_studies">Case Studies</a>
-                <a href="https://gtftechnologies.com/home/clients">Clients</a>
-                <a href="https://gtftechnologies.com/home/client_testimonials">Client Testimonials</a>
+                <a href="https://www.gtftechnologies.com/work/case_studies">
+                  Case Studies
+                </a>
+                <a href="https://www.gtftechnologies.com/work/clients">
+                  Clients
+                </a>
               </div>
 
               <a data-toggle="collapse" href="#hr">
@@ -177,9 +204,15 @@ const Header = ({ onOpen }) => {
                 <span className="arrow">&#8250;</span>
               </a>
               <div className="collapse submenu inner-sub" id="hr">
-                <a href="https://gtftechnologies.com/home/work_culture">Work Culture</a>
-                <a href="https://gtftechnologies.com/home/work_with_us">Work With Us</a>
-                <a href="https://gtftechnologies.com/home/life_at_gtf">Life At GTF Technologies</a>
+                <a href="https://www.gtftechnologies.com/human-resource/work_culture">
+                  Work Culture
+                </a>
+                <a href="https://www.gtftechnologies.com/human-resource/work_with_us">
+                  Work With Us
+                </a>
+                <a href="https://www.gtftechnologies.com/human-resource/life_at_gtf">
+                  Life At GTF Technologies
+                </a>
               </div>
 
               <a data-toggle="collapse" href="#contact">
@@ -187,66 +220,147 @@ const Header = ({ onOpen }) => {
                 <span className="arrow">&#8250;</span>
               </a>
               <div className="collapse submenu inner-sub" id="contact">
-                <a href="https://gtftechnologies.com/home/request_quote">Request For Quote</a>
-                <a href="https://gtftechnologies.com/home/say_hello">Say Hello!</a>
+                <a href="https://www.gtftechnologies.com/contact/request_quote">
+                  Request For Quote
+                </a>
+                <a href="https://www.gtftechnologies.com/contact/say_hello">
+                  Say Hello!
+                </a>
               </div>
-
             </div>
 
             <div className="contact_details bottom">
-
-
               <div className="tab-content">
-                <h5 className="state"><a className="state_url" href="https://www.gtftechnologies.com/delhi-ncr"> Delhi NCR </a></h5>
-                <a className="num-call" href="tel:+91-9953917978">+91-9953-91-7978</a>
+                <h5 className="state">
+                  <a
+                    className="state_url"
+                    href="https://www.gtftechnologies.com/delhi-ncr"
+                  >
+                    {" "}
+                    Delhi NCR{" "}
+                  </a>
+                </h5>
+                <a className="num-call" href="tel:+91-9953917978">
+                  +91-9953-91-7978
+                </a>
               </div>
 
               <div className="tab-content">
-                <h5 className="state"><a className="state_url" href="https://www.gtftechnologies.com/mumbai/">Mumbai</a></h5>
-                <a className="num-call" href="tel:+91-9582532488">+91-9582-53-2488</a>
+                <h5 className="state">
+                  <a
+                    className="state_url"
+                    href="https://www.gtftechnologies.com/mumbai/"
+                  >
+                    Mumbai
+                  </a>
+                </h5>
+                <a className="num-call" href="tel:+91-9582532488">
+                  +91-9582-53-2488
+                </a>
               </div>
 
               <div className="tab-content">
-                <h5 className="state"><a className="state_url" href="https://www.gtftechnologies.com/pune">Pune</a></h5>
-                <a className="num-call" href="tel:+91-9953605303">+91-9953-60-5303</a>
+                <h5 className="state">
+                  <a
+                    className="state_url"
+                    href="https://www.gtftechnologies.com/pune"
+                  >
+                    Pune
+                  </a>
+                </h5>
+                <a className="num-call" href="tel:+91-9953605303">
+                  +91-9953-60-5303
+                </a>
               </div>
 
               <div className="tab-content">
-                <h5 className="state"><a className="state_url" href="https://www.gtftechnologies.com/bangalore/">Bangalore</a></h5>
-                <a className="num-call" href="tel:+91-7838800248">+91-7838-80-0248</a>
+                <h5 className="state">
+                  <a
+                    className="state_url"
+                    href="https://www.gtftechnologies.com/bangalore/"
+                  >
+                    Bangalore
+                  </a>
+                </h5>
+                <a className="num-call" href="tel:+91-7838800248">
+                  +91-7838-80-0248
+                </a>
               </div>
 
               <div className="tab-content">
-                <h5 className="state"><a className="state_url" href="https://www.gtftechnologies.com/hyderabad/">Hyderabad</a></h5>
-                <a className="num-call" href="tel:+91-7838500356">+91-7838-50-0356</a>
+                <h5 className="state">
+                  <a
+                    className="state_url"
+                    href="https://www.gtftechnologies.com/hyderabad/"
+                  >
+                    Hyderabad
+                  </a>
+                </h5>
+                <a className="num-call" href="tel:+91-7838500356">
+                  +91-7838-50-0356
+                </a>
               </div>
 
               <div className="tab-content" id="myTabContent">
                 <h5 className="state">Email</h5>
-                <a className="num-call" href="mailto:hello@gtftechnologies.com">hello@gtftechnologies.com</a>
+                <a className="num-call" href="mailto:hello@gtftechnologies.com">
+                  hello@gtftechnologies.com
+                </a>
               </div>
 
               <ul className="social_icons inline">
                 <li>
-                  <a href="https://in.linkedin.com/company/gtftechnologies" className="linkedin-color" target="_blank">in</a>
+                  <a
+                    href="https://in.linkedin.com/company/gtftechnologies"
+                    className="linkedin-color"
+                    target="_blank"
+                  >
+                    in
+                  </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/gtfTechnologies" className="twitter-color" target="_blank">tw</a>
+                  <a
+                    href="https://twitter.com/gtfTechnologies"
+                    className="twitter-color"
+                    target="_blank"
+                  >
+                    tw
+                  </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/Gtftechnologiesindia/" className="facebook-color" target="_blank">fb</a>
+                  <a
+                    href="https://www.facebook.com/Gtftechnologiesindia/"
+                    className="facebook-color"
+                    target="_blank"
+                  >
+                    fb
+                  </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/gtf_technologies/" className="instagram-color" target="_blank">insta</a>
+                  <a
+                    href="https://www.instagram.com/gtf_technologies/"
+                    className="instagram-color"
+                    target="_blank"
+                  >
+                    insta
+                  </a>
                 </li>
                 <li>
-                  <a href="https://in.pinterest.com/GTFTechnologies/" className="pinterest-color" target="_blank">pi</a>
+                  <a
+                    href="https://in.pinterest.com/GTFTechnologies/"
+                    className="pinterest-color"
+                    target="_blank"
+                  >
+                    pi
+                  </a>
                 </li>
               </ul>
 
               <ul className="other_links">
                 <li>
-                  <a href="https://gtftechnologies.com/home/privacy_policy">Privacy Policy</a>
+                  <a href="https://gtftechnologies.com/home/privacy_policy">
+                    Privacy Policy
+                  </a>
                 </li>
                 <li>
                   <a href="https://gtftechnologies.com/sitemap.xml">Sitemap</a>
@@ -257,17 +371,31 @@ const Header = ({ onOpen }) => {
         </div>
       </div>
 
-      <div id="mySidenavoff" className="sidenavoff" style={{ width: isOpen ? "0" : "92px" }}>
+      <div
+        id="mySidenavoff"
+        className="sidenavoff"
+        style={{ width: isOpen ? "0" : "92px" }}
+      >
         <div className="inner-off">
           <div className="logo">
-            <Link href="https://gtftechnologies.com/" className="cursor-pointer"> <img src="/assets/images/gtf-logo.svg" width="100%" /></Link>
+            <Link
+              href="https://gtftechnologies.com/"
+              className="cursor-pointer"
+            >
+              {" "}
+              <img src="/assets/images/gtf-logo.svg" width="100%" />
+            </Link>
           </div>
-
         </div>
       </div>
-      <a href="javascript:void(0)" id="nav-toggle"
+      <a
+        href="javascript:void(0)"
+        id="nav-toggle"
         onClick={toggleNav}
-        className={isOpen ? "active" : ""} ><span></span></a>
+        className={isOpen ? "active" : ""}
+      >
+        <span></span>
+      </a>
     </>
   );
 };
