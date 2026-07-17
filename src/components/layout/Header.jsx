@@ -50,6 +50,16 @@ const Header = ({ onOpen }) => {
       // Enable scroll
       document.body.style.overflow = "";
       document.body.style.paddingRight = "";
+
+      // Remove all active, show, and rotate classes when sidebar is closed
+      if (typeof window !== "undefined") {
+        const $ = window.$ || window.jQuery;
+        if ($) {
+          $(".sidebar a").removeClass("active");
+          $(".sidebar .collapse").slideUp().removeClass("show");
+          $('.sidebar a[data-toggle="collapse"] .arrow').removeClass("rotate");
+        }
+      }
     }
 
     // Clean up on component unmount
@@ -96,7 +106,13 @@ const Header = ({ onOpen }) => {
 
           // Active class handling
           $(".sidebar a").removeClass("active");
-          $(this).addClass("active");
+          $('.sidebar a[data-toggle="collapse"]').each(function () {
+            const href = $(this).attr("href");
+            const $sub = $(href);
+            if ($sub.hasClass("show")) {
+              $(this).addClass("active");
+            }
+          });
         });
     };
 
