@@ -210,7 +210,7 @@ const BlogDetails = ({
 
                       <div className="big-box-multiple">
                         <h4 className="main-heading">{blog?.category?.name}</h4>
-                        <Link href={`/category/${blog?.category?.slug}`}>
+                        <Link href={`/${blog?.category?.slug}`}>
                           <button className="btn btn-default btn-multi arrow_button">
                             View All{" "}
                             <img src="/assets/frontend/images/right-down.png" />{" "}

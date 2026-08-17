@@ -194,7 +194,7 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
                         <h4 className="main-heading">{cat.name}</h4>
                         {
                           cat.blogs.length >= 3 && (
-                            <Link href={`/blog/category/${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
+                            <Link href={`${cat.slug}`}><button className="btn btn-default btn-multi arrow_button">View All <img src="assets/frontend/images/right-down.png" /> </button></Link>
                           )
                         }
                       </div>

@@ -9,7 +9,7 @@ const SearchInput = ({ className, value, onChange, placeholder = "Search..." }) 
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full px-4 py-2 pl-10 text-[var(--text-primary)] placeholder:text-[var(--text-primary)] border border-[var(--text-primary)] rounded-md  focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]"
+        className="w-full px-4 py-2 pl-10! text-[var(--text-primary)] placeholder:text-[var(--text-primary)] border border-[var(--text-primary)] rounded-md  focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]"
       />
 
       <Image src="/assets/icons/search.webp" alt='search icon' width={20} height={20}
