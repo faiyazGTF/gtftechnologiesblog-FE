@@ -156,7 +156,7 @@ const Footer = () => {
                   </li>
 
                   <li>
-                    <a href="https://gtftechnologies.com/privacy-policy.html" target="_blank">
+                    <a href="https://gtftechnologies.com/privacy_policy" target="_blank">
                       Privacy Policy
                     </a>
                   </li>
