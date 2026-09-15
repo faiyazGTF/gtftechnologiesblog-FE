@@ -34,17 +34,20 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
+  const isFirstRender = useRef(true);
+
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const endpoint = `${BASE_URL}website/blog-category?page=${page}&limit=${limit}&ids=${checkCategories.join(",")}`;
+      const idsQuery = checkCategories.length > 0 ? `&ids=${checkCategories.join(",")}` : "";
+      const endpoint = `${BASE_URL}website/blog-category?page=${page}&limit=${limit}${idsQuery}`;
       const res = await axios.get(endpoint);
       if (filtercategories.length <= 0) {
         setFiltercategories(res.data?.data || []);
       }
       setCategories(res.data?.data || []);
     } catch (err) {
-      console.error("Failed to fetch blogs:", err);
+      console.error("Failed to fetch categories:", err);
     } finally {
       setLoading(false);
     }
@@ -58,16 +61,13 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
   };
 
   useEffect(() => {
-    // Skip initial fetch if we already have server-side data
-    if (!initialCategories || initialCategories.length === 0) {
-      fetchCategories();
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      if (!initialCategories || initialCategories.length === 0) {
+        fetchCategories();
+      }
+      return;
     }
-  }, []);
-
-  useEffect(() => {
-    // If it's the initial render and we have server data, don't re-fetch
-    const isInitial = page === 1 && searchTerm === "" && checkCategories.length === 0;
-    if (isInitial && initialBlogs.length > 0) return;
 
     const delayDebounce = setTimeout(() => {
       fetchCategories();
@@ -219,7 +219,7 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
                 <BlogSidebar
                   filtercategories={filtercategories}
                   data={blogs}
-                  checkCategories={[]}
+                  checkCategories={checkCategories}
                   handleCategoryToggle={handleCategoryToggle}
                   filter={true}
                   sectionRef={sectionRef}

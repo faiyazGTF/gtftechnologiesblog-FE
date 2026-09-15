@@ -84,19 +84,22 @@ const BlogSidebar = ({ filtercategories, data, checkCategories, handleCategoryTo
                                 aria-labelledby="accordionHeadingOne" aria-expanded="false" data-parent="accordion">
                                 <div className="card-block col-12">
                                     <form>
-                                        {filtercategories && filtercategories.map((item, index) => (
-                                            <React.Fragment key={index}>
-                                                <input
-                                                    type="checkbox"
-                                                    id={`cat-${index}`}
-                                                    name="categories"
-                                                    value={item.id}
-                                                    checked={checkCategories ? checkCategories.includes(item.id) : false}
-                                                    onChange={() => handleCategoryToggle && handleCategoryToggle(item.id)}
-                                                />
-                                                <label htmlFor={`cat-${index}`}> {item.name}</label><br />
-                                            </React.Fragment>
-                                        ))}
+                                        {filtercategories && filtercategories.map((item, index) => {
+                                            const inputId = `cat-${item.id ?? index}`;
+                                            return (
+                                                <React.Fragment key={item.id ?? index}>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={inputId}
+                                                        name="categories"
+                                                        value={item.id}
+                                                        checked={checkCategories ? checkCategories.includes(item.id) : false}
+                                                        onChange={() => handleCategoryToggle && handleCategoryToggle(item.id)}
+                                                    />
+                                                    <label htmlFor={inputId}> {item.name}</label><br />
+                                                </React.Fragment>
+                                            );
+                                        })}
                                     </form>
                                 </div>
                             </div>
