@@ -155,13 +155,11 @@ export async function getServerSideProps(context) {
       },
     };
   } catch (err) {
+    if (err.response?.status === 404) {
+      return { notFound: true };
+    }
     console.error("Error in Category getServerSideProps:", err);
-    return {
-      props: {
-        initialCategory: null,
-        initialBlogs: [],
-      },
-    };
+    return { notFound: true };
   }
 }
 
