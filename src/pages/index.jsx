@@ -113,8 +113,7 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
         <meta name="google-site-verification" content="d2xfLBX0ojDABzk6iID4jN8WTINFqWhXyupGiOJouCA" />
         <title>GTF Technologies Blog — Real Estate Digital Marketing Tips</title>
         <meta name="keywords" content="real estate digital marketing, SEO tips, PPC strategies, branding insights, social media marketing, digital marketing blog, GTF Technologies blog, marketing trends" />
-        <meta name="description" content="Actionable insights, trends & strategies in real estate digital marketing from experts at GTF Technologies. Learn SEO, PPC, branding & growth hacks." />
-        <link rel="canonical" href={fullUrl} />
+        <link rel="canonical" href="https://blog.gtftechnologies.com/" />
         <meta name="distribution" content="Global" />
         <meta name="Language" content="English" />
         <meta name="doc-type" content="Public" />
@@ -175,9 +174,6 @@ const Blogs = ({ initialCategories, initialBlogs, initialTotalPages }) => {
         mobileSrc="/assets/frontend/images/breadcrumb.jpg"
         title="Blogs"
       />
-      {/* //canonial  */}
-      <link rel="canonical" href="https://gtftechnologies.com/blog" />
-
 
       <section className="blog-platter" ref={sectionRef}>
 

@@ -75,12 +75,15 @@ const CategoryDetails = ({ initialCategory, initialBlogs }) => {
     return formatted;
   }
 
+  const canonicalUrl = category?.slug ? `https://blog.gtftechnologies.com/${category.slug}/` : fullUrl;
+
   return (
     <>
       <Head>
         <title>{category ? `${category.name} - GTF Technologies Blog` : "Blog Category - GTF Technologies"}</title>
         <meta name="description" content={`Explore articles and insights related to ${category?.name || "our blog categories"} at GTF Technologies.`} />
-        <link rel="canonical" href={fullUrl} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"

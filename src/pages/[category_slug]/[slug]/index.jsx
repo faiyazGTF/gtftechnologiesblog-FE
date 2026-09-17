@@ -118,6 +118,10 @@ const BlogDetails = ({
     }
   };
 
+  const canonicalUrl = blog?.category?.slug && blog?.slug 
+    ? `https://blog.gtftechnologies.com/${blog.category.slug}/${blog.slug}/`
+    : fullUrl;
+
   return (
     <>
       <Head>
@@ -128,7 +132,8 @@ const BlogDetails = ({
         <meta name="description" content={blog?.meta_description || ""} />
         <meta name="keywords" content={blog?.meta_keywords || ""} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="canonical" href={fullUrl} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         {renderHTMLTags(blog?.head_tags)}
       </Head>
       {renderHTMLTags(blog?.body_tags)}
@@ -252,7 +257,7 @@ const BlogDetails = ({
 };
 
 export async function getServerSideProps(context) {
-  const { slug } = context.params;
+  const { category_slug, slug } = context.params;
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   try {
@@ -266,7 +271,18 @@ export async function getServerSideProps(context) {
       };
     }
 
-    // 2. Fetch other related data in parallel
+    // 2. Validate category: If accessed under wrong category URL, 301 redirect to correct category URL
+    const correctCategorySlug = blog.category?.slug;
+    if (correctCategorySlug && category_slug !== correctCategorySlug) {
+      return {
+        redirect: {
+          destination: `/${correctCategorySlug}/${slug}/`,
+          permanent: true,
+        },
+      };
+    }
+
+    // 3. Fetch other related data in parallel
     const [categoryBlogsRes, categoriesRes, popularBlogsRes] =
       await Promise.all([
         axios.get(`${BASE_URL}website/blog?categories=${blog.category?.id}`),

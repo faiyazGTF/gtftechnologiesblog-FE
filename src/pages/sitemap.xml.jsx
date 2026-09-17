@@ -34,6 +34,15 @@ function generateSiteMap({ baseUrl, categories = [], blogs = [] }) {
   const validCategories = categories.filter((cat) => cat && cat.slug);
   const validBlogs = blogs.filter((blog) => blog && blog.slug);
 
+  // Create a lookup map for category ID -> category slug
+  const categoryMap = new Map();
+  validCategories.forEach((cat) => {
+    if (cat.id && cat.slug) {
+      categoryMap.set(cat.id, cat.slug);
+      categoryMap.set(String(cat.id), cat.slug);
+    }
+  });
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home Page -->
@@ -56,24 +65,29 @@ function generateSiteMap({ baseUrl, categories = [], blogs = [] }) {
   </url>`;
     })
     .join("")}
-  ${validCategories
-    .map((cat) => {
-      return validBlogs
-        .map((blog) => {
-          const blogUrl = `${cleanBaseUrl}/${cat.slug}/${blog.slug}/`;
-          const lastMod = formatDate(
-            blog.updated_at || blog.created_at || blog.date_at
-          );
-          return `
-  <!-- ${escapeXml(cat.name || cat.slug)} -> ${escapeXml(blog.heading || blog.slug)} -->
+  ${validBlogs
+    .map((blog) => {
+      let catSlug = blog.category?.slug;
+      if (!catSlug && blog.category_id) {
+        catSlug = categoryMap.get(blog.category_id);
+      }
+      if (!catSlug && blog.category && (typeof blog.category === "string" || typeof blog.category === "number")) {
+        catSlug = categoryMap.get(blog.category);
+      }
+      if (!catSlug || !blog.slug) return "";
+
+      const blogUrl = `${cleanBaseUrl}/${catSlug}/${blog.slug}/`;
+      const lastMod = formatDate(
+        blog.updated_at || blog.created_at || blog.date_at
+      );
+      return `
+  <!-- ${escapeXml(blog.heading || blog.slug)} -->
   <url>
     <loc>${escapeXml(blogUrl)}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
-        })
-        .join("");
     })
     .join("")}
 </urlset>`;

@@ -14,9 +14,10 @@ const Card = ({ data, catSlug }) => {
     });
     return formatted;
   }
-  return (
+  const finalCatSlug = data?.category?.slug || catSlug;
 
-    <Link href={`/${catSlug}/${data.slug}`} className="card-link">
+  return (
+    <Link href={`/${finalCatSlug}/${data.slug}`} className="card-link">
       <div className=" inner-smb ">
         <img src={data.feature_image} width="100%" alt={data.heading} />
         <div className="content">
